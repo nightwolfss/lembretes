@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarefas</title>
+</head>
+<style>
+    body {
+        margin: 0%;
+        padding: 2%;
+        background-color: #F8F8FF;
+    }
+
+    #tabela1 td:nth-child(2) {
+        width: 300px;
+    }
+
+    #tabela1 td:first-child {
+        width: 30px;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    table td,
+    table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        color: black;
+    }
+
+    table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04AA6D;
+        color: white;
+    }
+
+    #alerta {
+        width: 400px;
+        background-color: white;
+    }
+
+    input#enviar {
+        width: 100px;
+        border-color: black;
+        border-radius: 5px;
+    }
+
+    input#msg {
+        background-color: azure;
+    }
+
+    input#apagarReg {
+        width: 50px;
+        background-color: orangered;
+    }
+
+    span.status {
+        opacity: 0;
+        transition: opacity 1s;
+        -webkit-transition: opacity 2s;
+    }
+
+    /* @media only screen and (max-width: 600px) {body {background - color: lightblue;    }} */
+</style>
+
+<body>
+    <h2>Adicionar Tarefas</h2>
+    <br> Adicionar à lista:<br>
+    <input type="text" id="msg"> <input type="button" id="enviar" value="add"><br><br><br>
+    <input type="button" id="buscar" value="buscar"> <span class="status" style="display: none;"> |
+        atualizado.</span><br><br>
+    <div id="alerta">
+        <div id="tabela1"></div>
+    </div>
+    <div id="divselect" style="position: fixed; z-index: 100; right: 5%; top: 5%;">
+        Tema<br>
+        <select name="temaselect" id="temaselect" style="background-color: #F8F8FF;">
+            <option value='--'>Selecione</option>
+            <option value='dark'>Dark</option>
+            <option value='default'>Padrão</option>
+        </select>
+    </div>
+</body>
+
+</html>
+<script>
+    document.querySelector("#temaselect").addEventListener("change", function () {
+        console.log(this.value);
+        tema(this.value);
+    });
+    document.querySelector("#enviar").addEventListener("click", function () {
+        if (document.querySelector("#msg").value != "") {
+            inserirInfo(document.querySelector("#msg").value);
+        }
+    });
+    document.querySelector("#buscar").addEventListener("click", function () {
+        consultarTodos();
+    });
+    document.querySelector("#msg").addEventListener("keypress", (e) => {
+        if ((e.keyCode === 13) && (document.querySelector("#msg").value != "")) {
+            document.querySelector("#enviar").click();
+        }
+    });
+    document.querySelector("#msg").addEventListener("focus", () => {
+        cor();
+    });
+    document.querySelector("#msg").addEventListener("focusout", () => {
+        removerCor();
+    });
+    var db = openDatabase("meuBanco", "1.0", "Esse é um banco de testes", 2 * 1024 * 1024);
+    var linhas;
+    function criarBanco() {
+        db.transaction((tx) => {
+            tx.executeSql("create table if not exists tabela1 (id unique, mensagem)");
+            tx.executeSql("select * from tabela1", [], (tx, resultado) => {
+                linhas = resultado.rows.length; console.log("Linhas: " + linhas);
+            }, null);
+        })
+    }
+    criarBanco();
+    consultarTodos();
+    function inserirInfo(info) {
+        var qtd = 0; try {
+            qtd = linhas + 1; console.log(qtd, info);
+            db.transaction((tx) => {
+                tx.executeSql(`insert into tabela1 (id, mensagem) values (?,?)`, [qtd, info]); linhas++; msg = "Inserido com SUCESSO!!"; console.log(msg);
+                document.querySelector("#msg").value = "";
+                consultarTodos();
+            });
+        } catch (error) {
+            msg = "Erro: " + error; console.log(msg);
+        } return msg;
+    }
+    function atualizarInfo(id, info) {
+        try {
+            db.transaction((tx) => {
+                tx.executeSql(`update tabela1 set mensagem = '${info}' where id = ${id}`, [], () => {
+                    msg = "Atualizado com SUCESSO!!";
+                    console.log(id, info);
+                    consultarTodos();
+                });
+            });
+        } catch (error) {
+            msg = "Erro: " + error; console.log(msg);
+        } return msg;
+    }
+    function deletarInfo(id, info) {
+        try {
+            db.transaction((tx) => {
+                tx.executeSql(`delete from tabela1 where id = ${id}`, [], () => {
+                    linhas--;
+                    msg = "Deletado com SUCESSO!!";
+                    console.log(id, info);
+                    consultarTodos();
+                });
+            });
+        }
+        catch (error) {
+            msg = "Erro: " + error;
+            console.log(msg);
+        }
+        return msg;
+    }
+    function consultarTodos() {
+        console.log("Entrou."); var tabela1 = '';
+        try {
+            tabela1 += '<table><tr><th>ID</th><th>TAREFA</th><th>Deletar</th></tr>'; db.transaction((tx) => {
+                tx.executeSql("select * from tabela1", [], (tx, resultado) => {
+                    for (let i = 0; i < resultado.rows.length; i++) {
+                        tabela1 += `<tr><td style="text-align: center">${resultado.rows.item(i).id}</td><td class='tdmsg'>${resultado.rows.item(i).mensagem}</td><td style="text-align: center"><input type='button' id='apagarReg' value='X'></td></tr>`;
+                    }
+                    tabela1 += "</table>"; document.querySelector("#tabela1").innerHTML = tabela1; document.querySelectorAll(".tdmsg").forEach(ele => {
+                        ele.addEventListener('dblclick', () => {
+                            let texto = prompt("Alterar", ele.textContent); let id = ele.parentElement.firstChild.textContent;
+                            if ((texto != "") && (texto != null) && (texto != undefined) && (id != "") && (id != null) && (id != undefined)) {
+                                atualizarInfo(id, texto);
+                            }
+                        });
+                    }); document.querySelectorAll("#apagarReg").forEach((ele) => {
+                        ele.addEventListener("click", () => {
+                            if (confirm(`Deletar mesmo?\n\n${ele.closest("tr").querySelectorAll("td")[0].textContent} - ${ele.closest("tr").querySelectorAll("td")[1].textContent}`)) {
+                                deletarInfo(ele.closest("tr").querySelectorAll("td")[0].textContent, ele.closest("tr").querySelectorAll("td")[1].textContent);
+                            }
+                        })
+                    })
+                }, null); document.querySelector(".status").style.display = ""; setTimeout(() => {
+                    document.querySelector(".status").style.opacity = 1;
+                }, 500);
+                setTimeout(() => {
+                    document.querySelector(".status").style.opacity = 0;
+                }, 3000);
+            });
+        } catch (error) {
+            tabela1 = `<h3>Falha: ${error}</h3>`;
+            document.querySelector("#tabela1").innerHTML = tabela1;
+        }
+    }
+    function cor() {
+        document.querySelector("#msg").style.backgroundColor = "#00F100";
+    }
+    function removerCor() {
+        document.querySelector("#msg").style.backgroundColor = "white";
+    }
+    document.querySelector("#temaselect").addEventListener("change", function () {
+        console.log(this.value);
+        tema(this.value);
+    });
+    function tema(cod) {
+        switch (cod) {
+            case "dark":
+                document.querySelector("body").style.color = "white";
+                document.querySelector("body").style.backgroundColor = "black";
+                document.querySelector("#temaselect").style.backgroundColor = "white"; break;
+
+            case "default":
+                document.body.style.color = "black";
+                document.querySelector("body").style.backgroundColor = "white";
+                break;
+            default:
+                break;
+        }
+    }</script>
