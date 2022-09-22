@@ -4,6 +4,52 @@ if(url.includes("trello.com/b/")){
     trello();
 }else if(url.includes("youtube.com")){
     youtube();
+}else if(url.includes("oq=brasileirao") || url.includes("google.com/search?q=campeonato+brasileiro")){
+    brasileirao();
+}
+
+
+
+function brasileirao(){
+	var p = setInterval(function(){
+	if(document.querySelector("#liveresults-sports-immersive__league-fullpage > div > div:nth-child(1) > div:nth-child(1) > div > div.ellipsisize.IvuoRc.ivmzN.imso-ani").innerText.includes("Brasileirão Série A")){
+	    document.querySelectorAll("tr[jscontroller='cvgK0e']").forEach(ele=>{
+
+	    var src = ele.querySelector(".mzZLbb img:nth-child(1)").getAttribute("src");
+	    var srcTamanho = src.substring(src.length - 4, src.length);
+
+	    if(srcTamanho == "Cg=="){
+		ele.closest("tr").style.backgroundColor = "#F0FFF0";
+	    }else if(srcTamanho == "Pgo="){
+		ele.closest("tr").style.backgroundColor = "#FFF5EE";
+	    }else{
+		ele.closest("tr").style.backgroundColor = "#F5FFFA";
+	    }
+
+	    ele.querySelector("td:nth-child(6)").style.color = "#6959CD";
+	    ele.querySelector("td:nth-child(6)").style.textShadow = "1px 1px 1px #32CD32"
+	    ele.querySelector("td:nth-child(7)").style.color = "#9ACD32";
+	    ele.querySelector("td:nth-child(7)").style.textShadow = "1px 1px 1px #9ACD32";
+	    ele.querySelector("td:nth-child(8)").style.color = "#FA8072";
+	    ele.querySelector("td:nth-child(8)").style.textShadow = "1px 1px 1px #FA8072";
+
+	    var time = ele.querySelector("td:nth-child(3)").innerText.split(" - [")[0];
+	    var pontos = parseInt(ele.querySelector("td:nth-child(4)").innerText, 10);
+	    var jogos = parseInt(ele.querySelector("td:nth-child(5)").innerText, 10);
+
+	    var percentual = " - [" + parseFloat((pontos * 100) / (jogos * 3)).toFixed(2) + "%]";
+	    const criarPercentual = document.createElement("span");
+	    criarPercentual.innerHTML = percentual;
+	    criarPercentual.style.opacity = 0.5;
+
+	    ele.querySelector("td:nth-child(3) span").innerText = "";
+	    ele.querySelector("td:nth-child(3) span").innerText = time;
+	    ele.querySelector("td:nth-child(3) span").appendChild(criarPercentual);
+	    ele.querySelector("td:nth-child(3)").style.width = "300px";
+	});
+		//clearInterval(p);
+	}
+	},1000);
 }
 
 //Componente que altera o backgroundcolor dos cards do trello.
