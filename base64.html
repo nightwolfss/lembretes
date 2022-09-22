@@ -14,9 +14,10 @@
     <textarea id="base64" rows="10" cols="50"></textarea> <br>
     <input type="button" id="copiar64" value="copiar"> <br><br>
 
-    <img src="#" id="imagem64" style="max-width: 500px;">
+    <img src="#" id="imagem64">
 
      <script>
+        alert(window.innerWidth);
            const fileInput = document.getElementById ("fileInput") ;
            fileInput.addEventListener ("change" , e => {
                 const file = fileInput.files [0] ;
@@ -29,9 +30,10 @@
 
            if(document.querySelector("#imagem64").getAttribute("src") == "#"){
             document.querySelector("#imagem64").style.display = "none";
-           }
-           document.querySelector("#copiar64").addEventListener("click", function(){
-                navigator.clipboard.writeText(document.querySelector("#base64").value);
+        }
+        document.querySelector("#copiar64").addEventListener("click", function(){
+            navigator.clipboard.writeText(document.querySelector("#base64").value);
+                document.querySelector("#imagem64").style.maxWidth = window.innerWidth + "px";
                 document.querySelector("#imagem64").setAttribute("src", document.querySelector("#base64").value);
                 document.querySelector("#imagem64").style.display = "";
            })
