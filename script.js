@@ -8,8 +8,6 @@ if(url.includes("trello.com/b/")){
     brasileirao();
 }
 
-
-
 function brasileirao(){
 	var p = setInterval(function(){
 	if(document.querySelector("#liveresults-sports-immersive__league-fullpage > div > div:nth-child(1) > div:nth-child(1) > div > div.ellipsisize.IvuoRc.ivmzN.imso-ani").innerText.includes("Brasileirão Série A")){
