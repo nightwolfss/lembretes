@@ -6,6 +6,7 @@ if(url.includes("trello.com/b/")){
     youtube();
 }
 
+//Componente que altera o backgroundcolor dos cards do trello.
 function trello(){
     var mudarACor = setInterval(function(){
     document.querySelectorAll("a div.list-card-details.js-card-details").forEach(ele=>{
