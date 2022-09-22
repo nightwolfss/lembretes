@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Base64</title>
+</head>
+<body>
+
+    <input type = "file" id = "fileInput"> <p><br>
+
+    <textarea id="base64" rows="10" cols="50"></textarea> <br>
+    <input type="button" id="copiar64" value="copiar"> <br><br>
+
+    <img src="#" id="imagem64" style="max-width: 500px;">
+
+     <script>
+           const fileInput = document.getElementById ("fileInput") ;
+           fileInput.addEventListener ("change" , e => {
+                const file = fileInput.files [0] ;
+                const reader = new FileReader() ;
+                reader.addEventListener ("load", () => {
+                      document.querySelector("#base64").value = (reader.result);
+                }) ;
+                reader.readAsDataURL(file);
+           } ) ;
+
+           if(document.querySelector("#imagem64").getAttribute("src") == "#"){
+            document.querySelector("#imagem64").style.display = "none";
+           }
+           document.querySelector("#copiar64").addEventListener("click", function(){
+                navigator.clipboard.writeText(document.querySelector("#base64").value);
+                document.querySelector("#imagem64").setAttribute("src", document.querySelector("#base64").value);
+                document.querySelector("#imagem64").style.display = "";
+           })
+     </script>
+
+</body>
+</html>
