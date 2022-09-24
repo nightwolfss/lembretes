@@ -62,7 +62,7 @@ function trello(){
                 case 'green' : ele.style.backgroundColor = "#90EE906D"; break;
                 case 'orange' : ele.style.backgroundColor = "#F5DEB36D"; break;
                 case 'purple' : ele.style.backgroundColor = "#DDA0DD6D"; break;
-		case 'black_dark' : ele.style.backgroundColor = "#0101016B"; break;
+		case 'black_dark' : ele.style.backgroundColor = "#0101013D"; break;
                     
             }
         });
