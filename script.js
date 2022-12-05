@@ -299,10 +299,11 @@ function pular(){
 	});
   
   document.querySelectorAll("#secondary ytd-compact-video-renderer").forEach(function(ele){
-      meusCanais.forEach(function(brilhar){
+	ele.style.backgroundColor = "#FFF";
+	meusCanais.forEach(function(brilhar){
 		if((ele.innerText.toLowerCase().includes(brilhar.nome.toLowerCase())||ele.innerText.toLowerCase().includes(brilhar.nome.toUpperCase()))){ 
-          ele.style.backgroundColor = brilhar.cor;
-      	}	
+	  ele.style.backgroundColor = brilhar.cor;
+	}	
       });
 	});
 }
