@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <title>Série</title>
+</head>
+<body class="container">
+
+    <style>
+        #select_treino{
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        td{
+            padding: 10px;
+        }
+
+        .opaco{
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            margin-left: -5px;
+        }
+
+        #select_treino{
+            padding-right: 200px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+        }
+
+        .select_topo{
+            align-tracks: center;
+            padding-left: 10px;
+            padding-top: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-left: -5px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 5px;
+        }
+
+        .hidden{
+            display: none;
+        }
+    </style>
+
+    <div class="select_topo">
+        <h3>Programa de Treinos</h3>
+        Treino: <select id="select_treino" onchange="change(this)">
+            <option value="0">Todos</option>
+            <option value="1">Inferiores</option>
+            <option value="2">Biceps</option>
+            <option value="3">Triceps</option>
+        </select>
+    </div>
+    
+    
+    <div class="opaco">
+        <div class="pernas">
+            <table id="treino_1" class="table table-striped">
+            </table>
+        </div>
+    </div>
+
+    <!-- Botão para acionar modal -->
+<button type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#ModalLongoExemplo">
+    Abrir modal de demonstração
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="ModalLongoExemplo" tabindex="-1" role="dialog" aria-labelledby="TituloModalLongoExemplo" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="TituloModalLongoExemplo">Título do modal</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <img src="" class="rounded mx-auto d-block recebeimg" width="100%" alt="...">
+            <hr>
+            <span class="mserie"></span><hr>
+            <span class="mrepeticoes"></span><hr>
+            <span class="mcarga"></span><hr>
+            <span class="mdescanso"></span><hr>
+            <span class="mmetodo"></span><hr>
+        </div>
+          
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <!-- <button type="button" class="btn btn-primary">Salvar mudanças</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+
+<script>
+    var serie1 = [{
+        "id" : 1,
+        "exercicio" : "Agachamento no Smith",
+        "serie" : "3x",
+        "repetições" : "10",
+        "carga" : "Pico 2\"",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2018/01/agachamento-no-smith.jpg.webp"
+    },
+    {
+        "id" : 2,
+        "exercicio" : "Cadeira Extensora",
+        "serie" : "5+10 BOMBA 5+10\"",
+        "repetições" : "2",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2016/08/cadeira-extensora-execucao-correta--1024x514.jpg.webp"
+    },
+    {
+        "id" : 3,
+        "exercicio" : "Leg Press",
+        "serie" : "3x",
+        "repetições" : "12",
+        "carga" : "45º",
+        "descanso" : 0,
+        "metodo":"Bi-set",
+        "img":"https://grandeatleta.com.br/wp-content/uploads/2022/06/leg-press-45-820x394.jpg"
+    },
+    {
+        "id" : 4,
+        "exercicio" : "Flexão Plantar no Leg Press",
+        "serie" : "3x",
+        "repetições" : "12",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"Bi-set",
+        "img":"https://i.pinimg.com/736x/c6/b8/af/c6b8afd8f93228f808e434c14171a555.jpg"
+    },
+    {
+        "id" : 5,
+        "exercicio" : "Cadeira Flexora",
+        "serie" : "3x",
+        "repetições" : "12+10\"",
+        "carga" : "Bomba 2",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2017/11/cadeira-flexora-e-a-mesa-flexora-diferencas.jpg.webp"
+    },
+    {
+        "id" : 6,
+        "exercicio" : "Cadeira Adutora",
+        "serie" : "3x",
+        "repetições" : "12x10",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2017/04/cadeira-adutora.jpg.webp"
+    },
+    {
+        "id" : 7,
+        "exercicio" : "Cadeira Abdutora",
+        "serie" : "3x",
+        "repetições" : "12x10",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2017/05/Cadeira-abdutora.jpg.webp"
+    },
+    {
+        "id" : 8,
+        "exercicio" : "Flexão Plantar no Aparelho",
+        "serie" : "3x",
+        "repetições" : "15+10 Bomba",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2017/12/flexao-plantar-sentado.jpg.webp"
+    },
+    {
+        "id" : 9,
+        "exercicio" : "Abdominal Prancha",
+        "serie" : "3x",
+        "repetições" : "30\"",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://grandeatleta.com.br/wp-content/uploads/2018/06/Prancha-abdominal-Ponte-ventral.gif"
+    },
+    {
+        "id" : 10,
+        "exercicio" : "Prancha Alta com Toque nos Ombros",
+        "serie" : "3x",
+        "repetições" : 12,
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://i.ytimg.com/vi/Hy-YhHE7t3c/maxresdefault.jpg"
+    }
+    ];
+
+    var serie2 = [{
+        "id" : 1,
+        "exercicio" : "Crucifixo invertido no Aparelho",
+        "serie" : "3x",
+        "repetições" : "12",
+        "carga" : "Pico 2\"",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2018/09/crucifixo-invertido-maquina.jpg"
+    },
+    {
+        "id" : 2,
+        "exercicio" : "Pulley Pela Frente Pegada Aberta/Pronada",
+        "serie" : "3x",
+        "repetições" : "6+10",
+        "carga" : "PICO2\" + Direto",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2018/10/pulley-frente-puxador.jpg.webp"
+    },
+    {
+        "id" : 3,
+        "exercicio" : "Remada Articulada Pegada Fechada/Pronada",
+        "serie" : "3x",
+        "repetições" : "6+10",
+        "carga" : "Bomba 2 + Direto",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2021/11/remada-articulada-1024x597.jpg"
+    },
+    {
+        "id" : 4,
+        "exercicio" : "Remada Sentado no Pulley Unilateral",
+        "serie" : "3x",
+        "repetições" : "12",
+        "carga" : "Rotação",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://i.ytimg.com/vi/K6VVDsmZvzY/maxresdefault.jpg"
+    },
+    {
+        "id" : 5,
+        "exercicio" : "Encolhimento de Ombros HBC em Pé",
+        "serie" : "3x",
+        "repetições" : "12",
+        "carga" : "Pico 2\"",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://fanaticospormusculacao.com/wp-content/uploads/2021/02/Encolhimento-com-halteres.jpg"
+    },
+    {
+        "id" : 6,
+        "exercicio" : "Flexão de Cotovelos \"21\" em Pé HBM",
+        "serie" : "3x",
+        "repetições" : "",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://grandeatleta.com.br/wp-content/uploads/2018/07/rosca-direta.gif"
+    },
+    {
+        "id" : 7,
+        "exercicio" : "Flexão de Cotovelos \"21\" em Pé HBM com Rotação Alter",
+        "serie" : "3x",
+        "repetições" : "6+10",
+        "carga" : "Pesado + Leve",
+        "descanso" : 0,
+        "metodo":"",
+        "img":""
+    },
+    {
+        "id" : 8,
+        "exercicio" : "Rosca Corda no Cross",
+        "serie" : "3x",
+        "repetições" : "12",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2017/12/Rosca-Martelo-na-polia-com-corda.jpg"
+    },
+    {
+        "id" : 9,
+        "exercicio" : "Rosca Inversa no Cross",
+        "serie" : "3x",
+        "repetições" : "10",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://www.hipertrofia.org/blog/wp-content/uploads/2018/09/execu%C3%A7%C3%A3o-rosca-inversa.jpg"
+    },
+    {
+        "id" : 10,
+        "exercicio" : "Abdominal Remador",
+        "serie" : "3x",
+        "repetições" : 20,
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://grandeatleta.com.br/wp-content/uploads/2021/02/abdominal-remador.jpg"
+    }
+    ];
+
+    var serie3 = [{
+        "id" : 1,
+        "exercicio" : "Supino Reto HBL",
+        "serie" : "1x",
+        "repetições" : "12/10/8/6",
+        "carga" : "Aumento de carga",
+        "descanso" : 0,
+        "metodo":"Bi-set",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2014/01/supino-reto.jpg"
+    },
+    {
+        "id" : 2,
+        "exercicio" : "Crucifixo Reto HBC",
+        "serie" : "1x",
+        "repetições" : "10",
+        "carga" : "P. Neutra",
+        "descanso" : 0,
+        "metodo":"Bi-set",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2017/05/crucifixo-exercicio.jpg"
+    },
+    {
+        "id" : 3,
+        "exercicio" : "Supino 45º HBL",
+        "serie" : "3x",
+        "repetições" : "12",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2016/10/supino-inclinado-com-barra.jpg"
+    },
+    {
+        "id" : 4,
+        "exercicio" : "Crucifixo no Cross Over em pé na Polia Alta",
+        "serie" : "4x",
+        "repetições" : "8",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2015/10/crossover-musculos-.jpg"
+    },
+    {
+        "id" : 5,
+        "exercicio" : "Abdução de Ombros Unilateral no Cross Over",
+        "serie" : "3x",
+        "repetições" : "12",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":""
+    },
+    {
+        "id" : 6,
+        "exercicio" : "Desenvolvimento \"Arnold\" sentado",
+        "serie" : "3x",
+        "repetições" : "12",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2018/10/desenvolvimento-arnold.jpg"
+    },
+    {
+        "id" : 7,
+        "exercicio" : "Flexão de Ombros HBL em pé",
+        "serie" : "3x",
+        "repetições" : "10",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":""
+    },
+    {
+        "id" : 8,
+        "exercicio" : "Triceps Coice na Polia",
+        "serie" : "4x",
+        "repetições" : "8",
+        "carga" : "",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://i.ytimg.com/vi/Mgf3BBYWpRA/maxresdefault.jpg"
+    },
+    {
+        "id" : 9,
+        "exercicio" : "Extensão de Cotovelos no Cross Over Polia Alta",
+        "serie" : "3x",
+        "repetições" : "12",
+        "carga" : "Supinado",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://treinomestre.com.br/wp-content/uploads/2022/01/pegada-pronada.png"
+    },
+    {
+        "id" : 10,
+        "exercicio" : "Abdominal Infra",
+        "serie" : "3x",
+        "repetições" : 20,
+        "carga" : "Supinado",
+        "descanso" : 0,
+        "metodo":"",
+        "img":"https://s2.glbimg.com/pkOf-PQax3UCVVqOkNdZgc5Oh5I=/0x0:690x1613/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2021/V/N/RQPPIBTB6DL93fKv30Ng/20-08-info-posturas-eu-atleta-infra-1-.jpg"
+    }
+    ];
+
+    var tabela = document.querySelector("#treino_1");
+    var html = "<tr class='noactions'><td>id</td><td>Exercício</td><td class='hide'>Série</td><td class='hide'>Repetições</td><td class='hide'>Carga</td><td class='hide'>Descanso</td><td class='hide'>Método</td><td class='hide'>img</td></tr>";
+    serie1.forEach(ele=>{
+        html += "<tr class='tpernas'>";
+        html += "<td>"+(ele.id);
+        html += "</td><td>"+(ele.exercicio);
+        html += "</td><td class='hide'>"+(ele.serie);
+        html += "</td><td class='hide'>"+(ele.repetições);
+        html += "</td><td class='hide'>"+(ele.carga);
+        html += "</td><td class='hide'>"+(ele.descanso);
+        html += "</td><td class='hide'>"+(ele.metodo);
+        html += "</td><td class='hide'>"+(ele.img);
+        html += "</td></tr>";
+    });
+    
+
+    // var tabela2 = document.querySelector("#treino_2");
+    // var html = "<tr><td>id</td><td>Exercício</td><td>Série</td><td>Repetições</td><td>Carga</td><td>Descanso</td><td>Método</td></tr>";
+    // var html="";
+    serie2.forEach(ele=>{
+        html += "<tr class='tbiceps'>";
+        html += "<td>"+(ele.id);
+        html += "</td><td>"+(ele.exercicio);
+        html += "</td><td class='hide'>"+(ele.serie);
+        html += "</td><td class='hide'>"+(ele.repetições);
+        html += "</td><td class='hide'>"+(ele.carga);
+        html += "</td><td class='hide'>"+(ele.descanso);
+        html += "</td><td class='hide'>"+(ele.metodo);
+        html += "</td><td class='hide'>"+(ele.img);
+        html += "</td></tr>";
+    });
+
+   
+
+    // var tabela3 = document.querySelector("#treino_3");
+    // var html = "<tr><td>id</td><td>Exercício</td><td>Série</td><td>Repetições</td><td>Carga</td><td>Descanso</td><td>Método</td></tr>";
+    // var html="";
+    serie3.forEach(ele=>{
+        html += "<tr class='ttriceps'>";
+        html += "<td>"+(ele.id);
+        html += "</td><td>"+(ele.exercicio);
+        html += "</td><td class='hide'>"+(ele.serie);
+        html += "</td><td class='hide'>"+(ele.repetições);
+        html += "</td><td class='hide'>"+(ele.carga);
+        html += "</td><td class='hide'>"+(ele.descanso);
+        html += "</td><td class='hide'>"+(ele.metodo);
+        html += "</td><td class='hide'>"+(ele.img);
+        html += "</td></tr>";
+    });
+
+    tabela.innerHTML = html;
+    // tabela.border = "1px solid";
+    // tabela.style.borderColor = "#FF7F50";
+
+    // tabela2.innerHTML = html;
+    // tabela2.border = "1px solid";
+    // tabela2.style.borderColor = "green";
+
+    // tabela3.innerHTML = html;
+    // tabela3.border = "1px solid";
+    // tabela3.style.borderColor = "green";
+
+
+    function change(opcao){
+        if(opcao.value == 1){
+            document.querySelectorAll(".tpernas").forEach(ele=>{
+                ele.style.display = "";
+            });
+            document.querySelectorAll(".tbiceps").forEach(ele=>{
+                ele.style.display = "none";
+            });
+            document.querySelectorAll(".ttriceps").forEach(ele=>{
+                ele.style.display = "none";
+            });
+            // document.querySelector(".tbiceps").style.display = "none";
+            // document.querySelector(".ttriceps").style.display = "none";
+        }else if(opcao.value == 2){
+            document.querySelectorAll(".tpernas").forEach(ele=>{
+                ele.style.display = "none";
+            });
+            document.querySelectorAll(".tbiceps").forEach(ele=>{
+                ele.style.display = "";
+            });
+            document.querySelectorAll(".ttriceps").forEach(ele=>{
+                ele.style.display = "none";
+            });
+            // document.querySelector(".tpernas").style.display = "none";
+            // document.querySelector(".tbiceps").style.display = "";
+            // document.querySelector(".ttriceps").style.display = "none";
+        }else if(opcao.value == 3){
+            document.querySelectorAll(".tpernas").forEach(ele=>{
+                ele.style.display = "none";
+            });
+            document.querySelectorAll(".tbiceps").forEach(ele=>{
+                ele.style.display = "none";
+            });
+            document.querySelectorAll(".ttriceps").forEach(ele=>{
+                ele.style.display = "";
+            });
+            
+        }else{
+            document.querySelectorAll(".tpernas").forEach(ele=>{
+                ele.style.display = "";
+            });
+            document.querySelectorAll(".tbiceps").forEach(ele=>{
+                ele.style.display = "";
+            });
+            document.querySelectorAll(".ttriceps").forEach(ele=>{
+                ele.style.display = "";
+            });
+        }
+    }
+
+    document.querySelectorAll(".hide").forEach(ele=>{
+        ele.style.display = "none";
+    });
+
+    // document.querySelector("#select_treino").addEventListener("change", (ele)=>{
+    //     console.log(ele.value);
+    // });
+
+    document.querySelectorAll("tr").forEach(ele=>{
+        if(!ele.textContent.includes("idExercícioSérieRepetições")){
+            ele.addEventListener("click", ()=>{
+                if(ele.style.backgroundColor == "yellow"){
+                ele.style.backgroundColor = "";
+            }else{
+                ele.style.backgroundColor = "yellow";
+            }
+            })
+            ele.addEventListener("dblclick", ()=>{
+            document.querySelector("button[data-target='#ModalLongoExemplo']").click();
+            document.querySelector(".recebeimg").setAttribute("src", ele.querySelector("td:nth-child(8)").textContent); 
+            document.querySelector("#TituloModalLongoExemplo").textContent = ele.querySelector("td:nth-child(2)").textContent;  
+            document.querySelector(".mserie").textContent = "Série: " + ele.querySelector("td:nth-child(3)").textContent;  
+            document.querySelector(".mrepeticoes").textContent = "Repetições: " +  ele.querySelector("td:nth-child(4)").textContent;  
+            document.querySelector(".mcarga").textContent = "Carga: " +  ele.querySelector("td:nth-child(5)").textContent;    
+            document.querySelector(".mdescanso").textContent = "Descanso: " +  ele.querySelector("td:nth-child(6)").textContent;  
+            document.querySelector(".mmetodo").textContent = "Método: " +  ele.querySelector("td:nth-child(7)").textContent;  
+        })
+        }
+    });
+
+    // document.querySelector(".noactions").addEventListener("click", ()=>{});
+
+    document.querySelector("button.btn.btn-secondary").addEventListener("click",()=>{
+        document.querySelector(".recebeimg").setAttribute("src", "");
+    });
+
+    var papeldeparede = [
+        "https://w0.peakpx.com/wallpaper/772/564/HD-wallpaper-never-give-up-body-bodybuilding-bodybuilding-fitness-gethealthy-gym-healthylife-motivation-workout.jpg",
+        "https://wallpaperaccess.com/full/7458375.jpg",
+        "https://i.pinimg.com/550x/10/c7/05/10c7056eaf594808e458790540f1f028.jpg",
+        "https://i.pinimg.com/736x/0b/e5/5f/0be55fa84182893bacd4bdd0113e1f5b.jpg",
+        "https://w0.peakpx.com/wallpaper/328/370/HD-wallpaper-gym-goku.jpg"
+    ];
+
+    document.querySelector("body").style.backgroundImage = `URL(${papeldeparede[Math.floor(Math.random()*papeldeparede.length)]})`;
+    document.querySelector("body").style.backgroundRepeat = "no-repeat";
+    document.querySelector("body").style.backgroundSize = "cover";
+    document.querySelector("body").style.backgroundPosition = "center";
+    document.querySelector("body").style.backgroundAttachment = "fixed";
+
+    document.querySelector(".opaco").style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+
+</script>
