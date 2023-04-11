@@ -77,11 +77,11 @@
 
 
     <input type="button" value="Add Exercício" id="ativarAdd"></p></p>
-    <div id="escondida" style="display: none;">
-        <table>
-            <tr><td>Exercicio</td><td><input type="text" name="nomeEx" id="nomeEx"></td></tr>
-            <tr><td>Serie</td><td><input type="text" name="linkImg" id="serieEx"></td></tr>
-            <tr><td>Repetições</td><td><input type="text" name="repeticoesEx" id="repeticoesEx"></td></tr>
+    <div id="escondida" style="display: none;" class="opaco">
+        <table class="table table-striped">
+            <tr><td>Exercicio</td><td><input type="text" name="nomeEx" id="nomeEx" required></td></tr>
+            <tr><td>Serie</td><td><input type="text" name="linkImg" id="serieEx" required></td></tr>
+            <tr><td>Repetições</td><td><input type="text" name="repeticoesEx" id="repeticoesEx" required></td></tr>
             <tr><td>Carga</td><td><input type="text" name="cargaEx" id="cargaEx"></td></tr>
             <tr><td>Descanso</td><td><input type="text" name="descansoEx" id="descansoEx"></td></tr>
             <tr><td>Metodo</td><td><input type="text" name="metodoEx" id="metodoEx"></td></tr>
@@ -104,9 +104,11 @@
     </p>
     </p>
 
-    <table id="lista" border="1" style="text-align: center;">
-
-    </table>
+    <div class="opaco" style="background-color: rgba(255, 255, 255, 0.85)">
+        <table id="lista" style="text-align: center;" class="table table-striped opaco">
+            
+        </table>
+    </div>
 
     <!-- Botão para acionar modal -->
 <button type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#ModalLongoExemplo">
@@ -161,6 +163,7 @@
         if(escondida.style.display == 'none'){
             escondida.style.display = '';
             document.querySelector("#ativarAdd").value = "ocultar";
+            document.querySelector("#escondida").style.backgroundColor = "rgba(255, 255, 255, 0.8)";
         }else{
             escondida.style.display = 'none';
             document.querySelector("#ativarAdd").value = "Add Exercício";
@@ -176,20 +179,27 @@
     
     function adicionarExercicio(){
         try {
-            db.collection("listaExercicios").add({
-                "nome" : document.querySelector("#nomeEx").value,
-                "serie" : document.querySelector("#serieEx").value,
-                "repeticioes" : document.querySelector("#repeticoesEx").value,
-                "carga" : document.querySelector("#cargaEx").value,
-                "descanso" : document.querySelector("#descansoEx").value,
-                "metodo" : document.querySelector("#metodoEx").value,
-                "imagem" : document.querySelector("#imagemEx").value,
-                "video" : document.querySelector("#videoEx").value,
-                "tipo" : document.querySelector("input[name='tipoEx']:checked").value,
-                "hidden" : parseInt(Math.random() * (1000000 - 1) + 1),
-            });
+                let nome = document.querySelector("#nomeEx").value;
+                let serie = document.querySelector("#serieEx").value;
+                let repeticioes = document.querySelector("#repeticoesEx").value;
+                if(nome != "" || serie != "" || repeticioes != ""){
+                    db.collection("listaExercicios").add({
+                        "nome" : document.querySelector("#nomeEx").value,
+                        "serie" : document.querySelector("#serieEx").value,
+                        "repeticioes" : document.querySelector("#repeticoesEx").value,
+                        "carga" : document.querySelector("#cargaEx").value,
+                        "descanso" : document.querySelector("#descansoEx").value,
+                        "metodo" : document.querySelector("#metodoEx").value,
+                        "imagem" : document.querySelector("#imagemEx").value,
+                        "video" : document.querySelector("#videoEx").value,
+                        "tipo" : document.querySelector("input[name='tipoEx']:checked").value,
+                        "hidden" : parseInt(Math.random() * (1000000 - 1) + 1),
+                    });
+                }else{
+                    throw new Error('Verifique os campos.');;
+                }
         } catch (error) {
-            alert("Falha ao salvar.");
+            alert(error);
         }
     }
 
@@ -210,6 +220,7 @@
                 e.addEventListener("click", function(){
                     // console.log(e.closest("tr").querySelector("td:nth-child(1)").textContent);
                     db.collection("listaExercicios").doc({hidden:parseInt(e.closest("tr").querySelector("td:nth-child(1)").textContent, 10)}).delete();
+                    e.closest("tr").style.display = "none";
                 });
             });
         });
