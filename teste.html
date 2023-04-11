@@ -181,12 +181,12 @@
         try {
                 let nome = document.querySelector("#nomeEx").value;
                 let serie = document.querySelector("#serieEx").value;
-                let repeticioes = document.querySelector("#repeticoesEx").value;
-                if(nome != "" || serie != "" || repeticioes != ""){
+                let repeticoes = document.querySelector("#repeticoesEx").value;
+                if(nome != "" || serie != "" || repeticoes != ""){
                     db.collection("listaExercicios").add({
                         "nome" : document.querySelector("#nomeEx").value,
                         "serie" : document.querySelector("#serieEx").value,
-                        "repeticioes" : document.querySelector("#repeticoesEx").value,
+                        "repeticoes" : document.querySelector("#repeticoesEx").value,
                         "carga" : document.querySelector("#cargaEx").value,
                         "descanso" : document.querySelector("#descansoEx").value,
                         "metodo" : document.querySelector("#metodoEx").value,
