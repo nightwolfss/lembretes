@@ -1,5 +1,9 @@
 var url = window.location.href;
 
+document.querySelector(".drawer-control-x-button.blackbox-button-holder").addEventListener("click", function(){
+    document.querySelector(".blackbox-overlay").style.display = 'none';
+});
+
 if(url.includes("trello.com/b/")){
     trello();
 }else if(url.includes("youtube.com")){
