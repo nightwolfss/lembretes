@@ -8,8 +8,29 @@ if(url.includes("trello.com/b/")){
     trello();
 }else if(url.includes("youtube.com")){
     youtube();
-}else if(url.includes("oq=brasileirao") || url.includes("google.com/search?q=campeonato+brasileiro")){
+}else if(url.includes("oq=brasileirao") || url.includes("oq=brasileirão") || url.includes("google.com/search?q=campeonato+brasileiro")){
     brasileirao();
+}else if(url.includes("https://apps.correios.com.br/portalimportador/pages/pesquisarRemessaImportador/pesquisarRemessaImportador.jsf")){
+    importacoesCorreios();
+}
+
+function importacoesCorreios(){
+	var produtos = [{'item':'NL641321607BR','resp':'Depilall'},
+			{'item':'LB573677391HK','resp':'Cubot P80'},
+			{'item':'NL712183954BR','resp':'RX580 8G'}, 
+			{'item':'NL701089096BR','resp':'HY300 Projetor'}, 
+			{'item':'NL679592564BR','resp':'x79 (x2)'},
+			{'item':'NL654390186BR','resp':'Anti_Barulho'}];
+
+	setInterval(function(){
+		document.querySelectorAll("#tableEncomendas tbody tr td").forEach(ele=>{
+			produtos.forEach(e=>{
+				if(e.item == ele.innerText){
+				    ele.innerText += " | " + e.resp;
+				}
+			});
+		})
+	}, 2000);
 }
 
 function brasileirao(){
