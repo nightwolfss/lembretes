@@ -4,8 +4,8 @@ document.querySelector(".drawer-control-x-button.blackbox-button-holder").addEve
     document.querySelector(".blackbox-overlay").style.display = 'none';
 });
 
-document.querySelector(".drawer-control-x-button.blackbox-button-holder").addEventListener("load", function(ele){
-	ele.style.display = 'none';
+document.querySelector(".drawer-control-x-button.blackbox-button-holder").addEventListener("load", function(){
+	document.querySelector(".blackbox-overlay").style.display = 'none';
 });
 
 if(url.includes("trello.com/b/")){
