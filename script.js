@@ -1,14 +1,33 @@
 var url = window.location.href;
 
-document.querySelector(".drawer-control-x-button.blackbox-button-holder").addEventListener("click", function(){
-    document.querySelector(".blackbox-overlay").style.display = 'none';
-});
+// document.querySelector(".drawer-control-x-button.blackbox-button-holder").addEventListener("click", function(){
+//     document.querySelector(".blackbox-overlay").style.display = 'none';
+// });
 
 //document.querySelector(".drawer-control-x-button.blackbox-button-holder").addEventListener("load", function(){
-	setTimeout(function(){
-		document.querySelector(".blackbox-overlay").style.display = 'none';
-	},3000);
+	// setTimeout(function(){
+	// 	document.querySelector(".blackbox-overlay").style.display = 'none';
+	// },3000);
 //});
+
+
+// Função para carregar o jQuery dinamicamente
+function loadJQuery() {
+var script = document.createElement("script");
+script.src = "https://code.jquery.com/jquery-3.6.0.min.js";
+script.onload = function() {
+	// O código aqui será executado após o carregamento do jQuery
+	console.log("jQuery carregado com sucesso!");
+	// Aqui você pode fazer uso da biblioteca jQuery
+	};
+	document.head.appendChild(script);
+}
+// Chamada da função para carregar o jQuery
+loadJQuery();
+
+setTimeout(function(){
+	$(".blackbox-overlay").fadeOut();
+},1000);
 
 if(url.includes("trello.com/b/")){
     trello();
