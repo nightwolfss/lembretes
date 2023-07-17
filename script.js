@@ -4,6 +4,10 @@ document.querySelector(".drawer-control-x-button.blackbox-button-holder").addEve
     document.querySelector(".blackbox-overlay").style.display = 'none';
 });
 
+document.querySelector(".drawer-control-x-button.blackbox-button-holder").addEventListener("load", function(ele){
+	ele.style.display = 'none';
+});
+
 if(url.includes("trello.com/b/")){
     trello();
 }else if(url.includes("youtube.com")){
