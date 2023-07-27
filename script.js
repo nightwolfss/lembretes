@@ -365,7 +365,8 @@ function pular(){
 	});
   
   document.querySelectorAll("#secondary ytd-compact-video-renderer").forEach(function(ele){
-	ele.style.backgroundColor = "#FFF";
+	//ele.style.backgroundColor = "#FFF";
+	  ele.style.backgroundColor = "";
 	meusCanais.forEach(function(brilhar){
 		if((ele.innerText.toLowerCase().includes(brilhar.nome.toLowerCase())||ele.innerText.toLowerCase().includes(brilhar.nome.toUpperCase()))){ 
 	  ele.style.backgroundColor = brilhar.cor;
