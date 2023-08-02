@@ -53,7 +53,7 @@
                             a.addEventListener("click", function(e){
                                 let cod = a.parentElement.parentElement.querySelector("td:nth-child(1)").textContent;
                                 let nome = a.parentElement.parentElement.querySelector("td:nth-child(2)").textContent;
-                                fetch("http://localhost:8085/usuario/deletarUsuario?nome="+nome+"&cod="+cod).then(function(){usuarios();}).catch(error=>{console.log("erro: ", error)});
+                                fetch("http://vitorlima.ddns.net:8085/usuario/deletarUsuario?nome="+nome+"&cod="+cod).then(function(){usuarios();}).catch(error=>{console.log("erro: ", error)});
                         });
                         });
 
@@ -61,7 +61,7 @@
                     let nome = document.querySelector("#usuarioNovo").value;
                     let perfil = document.querySelector("#usuarioPerfil").value;
 
-                    fetch("http://localhost:8085/usuario/gravarUsuario?nome="+nome+"&perfil="+perfil).then(function(){usuarios();}).catch(error=>{console.log("erro: ", error)});
+                    fetch("http://vitorlima.ddns.net:8085/usuario/gravarUsuario?nome="+nome+"&perfil="+perfil).then(function(){usuarios();}).catch(error=>{console.log("erro: ", error)});
                 });
             })
             .catch(error => console.error('Erro:', error));
