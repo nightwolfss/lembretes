@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>InterFut</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="container">
+   <h1>Usuarios</h1>
+   <div id="usuarios"></div>
+    <hr>
+    <h1>Alunos</h1>
+    <div id="alunos"></div>
+    <hr>
+    
+    <h1>Disciplinas</h1>
+    <div id="disciplinas"></div>
+    <hr>
+
+   <h2>Turmas</h2>
+   <div id="turmas"></div>
+   <div id="cadastrarTurma"></div><br>
+    <hr>
+        
+</body>
+</html>
+<script>
+    var alunoLista = [];
+    var disciplinaLista = [];
+
+    function usuarios(){
+        var html = "<table class='table' border=2><tr><td>Codigo</td><td>Nome</td><td>Perfil</td><td>Del</td></tr>";
+    // fetch('http://vitorlima.ddns.net:8085/usuario/all')
+    fetch('http://vitorlima.ddns.net:8085/usuario/all')
+            .then(response => response.json())
+            .then((data)=>{
+                data.forEach(function(ele){
+                    html += "<tr><td>"+ele.codigo+"</td><td>"+ele.nome +"</td><td>"+ele.perfil +"</td><td><input type='button' class='delUsuario' value='deletar'></td></tr>"
+                });
+                html += "</table>";
+                html += "<br>adicionar:<br><table><tr><td>Nome:</td><td><input type='text' class='form-control' id='usuarioNovo'></td></tr>";
+                    html += "<tr><td>Perfil:</td>";
+                        html += "<td><select name='usuarioPerfil' id='usuarioPerfil'><option value='admin'>Admin</option><option value='user'>Usuario</option></select></td>";
+                        html += "<td><input type='button' value='gravar' id='enviarUsuario'></td></tr></table>";
+                        
+                        document.querySelector("#usuarios").innerHTML = html + "</table>";
+                        
+                        document.querySelectorAll("table .delUsuario").forEach(a=>{
+                            a.addEventListener("click", function(e){
+                                let cod = a.parentElement.parentElement.querySelector("td:nth-child(1)").textContent;
+                                let nome = a.parentElement.parentElement.querySelector("td:nth-child(2)").textContent;
+                                fetch("http://vitorlima.ddns.net:8085/usuario/deletarUsuario?nome="+nome+"&cod="+cod).then(function(){usuarios();}).catch(error=>{console.log("erro: ", error)});
+                        });
+                        });
+
+                document.querySelector("#enviarUsuario").addEventListener("click", function(){
+                    let nome = document.querySelector("#usuarioNovo").value;
+                    let perfil = document.querySelector("#usuarioPerfil").value;
+
+                    fetch("http://vitorlima.ddns.net:8085/usuario/gravarUsuario?nome="+nome+"&perfil="+perfil).then(function(){usuarios();}).catch(error=>{console.log("erro: ", error)});
+                });
+            })
+            .catch(error => console.error('Erro:', error));
+
+    }
+
+    function alunos(){
+        var html = "<table class='table' border=2><tr><td>Codigo</td><td>Nome</td><td>Matrícula</td><td>Deletar</td></tr>";
+    fetch('http://vitorlima.ddns.net:8085/aluno/all')
+            .then(response => response.json())
+            .then((data)=>{
+                data.forEach(function(ele){
+                    html += "<tr><td>"+ele.codigo+"</td><td>"+ele.nome +"</td><td>"+ele.matricula +"</td><td><input type='button' class='delAluno' value='deletar'></td></tr>";
+                    alunoLista.push(ele);
+                    
+                });
+                html += "</table>"
+                html += "<br>adicionar:<br><table><tr><td>Nome:</td><td><input type='text' class='form-control' id='alunoNovo'></td></tr>";
+                html += "<tr><td>Matricula:</td><td><input type='text' class='form-control' id='alunoMatricula'></td><td><input type='button' value='gravar' id='enviarAluno'></td></tr>";
+                document.querySelector("#alunos").innerHTML = html + "</table>";
+
+                document.querySelectorAll("table .delAluno").forEach(a=>{
+                            a.addEventListener("click", function(e){
+                                let codigo = a.parentElement.parentElement.querySelector("td:nth-child(1)").textContent;
+                                let matricula = a.parentElement.parentElement.querySelector("td:nth-child(3)").textContent;
+                                fetch("http://vitorlima.ddns.net:8085/aluno/deletarAluno?nome="+matricula+"&cod="+codigo).then(function(){alunos();}).catch(error=>{console.log("erro: ", error)});
+                        });
+                        });
+
+                document.querySelector("#enviarAluno").addEventListener("click", function(){
+                    let nome = document.querySelector("#alunoNovo").value;
+                    let matricula = parseInt(document.querySelector("#alunoMatricula").value, 10);
+
+                    fetch("http://vitorlima.ddns.net:8085/aluno/gravarAluno?nome="+nome+"&matricula="+matricula).then(function(){alunos(); turmas();}).catch(error=>{console.log("erro: ", error)});
+                });
+
+            })
+            .catch(error => console.error('Erro:', error));
+
+    }
+
+    function disciplinas(){
+        var html = "<table class='table' border=2><tr><td>Codigo</td><td>Nome</td><td>Valor</td><td>Deletar</td></tr>";
+    fetch('http://vitorlima.ddns.net:8085/disciplina/all')
+            .then(response => response.json())
+            .then((data)=>{
+                data.forEach(function(ele){
+                    html += "<tr><td>"+ele.cod+"</td><td>"+ele.nome +"</td><td>"+ele.mensalidade +"</td><td><input type='button' class='delDisciplinas' value='deletar'></td></tr>";
+                    disciplinaLista.push(ele);
+                    
+                });
+                html += "</table>"
+                html += "<br>adicionar:<br><table><tr><td>Nome:</td><td><input type='text' class='form-control' id='nomeDisciplina'></td></tr>";
+                html += "<tr><td>Valor:</td><td><input type='real' class='form-control' id='valorDisciplina'></td><td><input type='button' value='gravar' id='enviarDisciplina'></td><tr></table>";
+                document.querySelector("#disciplinas").innerHTML = html;
+
+                document.querySelectorAll("table .delDisciplinas").forEach(a=>{
+                    a.addEventListener("click", function(e){
+                        let cod = a.parentElement.parentElement.querySelector("td:nth-child(1)").textContent;
+                        let nome = a.parentElement.parentElement.querySelector("td:nth-child(2)").textContent;
+                        fetch("http://vitorlima.ddns.net:8085/disciplina/deletarDisciplina?nome="+nome+"&cod="+cod).then(function(){disciplinas();}).catch(error=>{console.log("erro: ", error)});
+                    });
+                });
+
+                document.querySelector("#enviarDisciplina").addEventListener("click", function(){
+                    let nome = document.querySelector("#nomeDisciplina").value;
+                    let valor = parseFloat(document.querySelector("#valorDisciplina").value, 10);
+
+                    fetch("http://vitorlima.ddns.net:8085/disciplina/gravarDisciplina?nome="+nome+"&valor="+valor).then(function(){disciplinas(); turmas();}).catch(error=>{console.log("erro: ", error)});
+                });
+
+            })
+            .catch(error => console.error('Erro:', error));
+
+    }
+
+    function turmas(){
+        var html = "<table class='table' border='2'><tr><td>Codigo</td><td>Nome</td><td>Disciplina</td><td>Alunos</td><td>Deletar</td></tr>";
+        var htmlAlunos = "";
+        var htmlDisciplinas = "";
+
+        fetch('http://vitorlima.ddns.net:8085/turma/all')
+        .then(response => response.json())
+        .then((data)=>{
+            data.forEach(ele=>html += "<tr><td>"+ele.codigo+"</td><td>"+ele.nome +"</td><td>"+ele.disciplina +"</td><td>"+ele.alunos +"</td><td><input type='button' class='delTurmas' value='deletar'></td></tr>");
+            html += "</table><br>"
+            document.querySelector("#turmas").innerHTML = html ;
+            
+            var htmlCadastrar = "<table class='table' border='2'><tr><td>Nome</td><td><input type='text' class='form-control' id='turmaNomeCad' name='turmaNomeCad'></td></tr>"+
+                "<tr><td>Disciplina</td><td><select id='turmaDisciplinaCad'></select></td></tr>"+
+                "<tr><td valign='top'>Alunos</td><td valign='top' name='turmaAlunoCad' id='turmaAlunoCad'></td></tr></table>";
+                
+                htmlCadastrar += "<input type='button' id='gravarTurma' value='gravar'>";               
+
+                alunoLista.forEach(function(e){
+                    htmlAlunos += "<input type='checkbox' name='alunocheck' value='"+e.nome+"'> "+e.nome+"<br>";
+                });
+                document.querySelector("#cadastrarTurma").innerHTML = htmlCadastrar ;
+
+                document.querySelectorAll("table .delTurmas").forEach(a=>{
+                    a.addEventListener("click", function(e){
+                        let cod = a.parentElement.parentElement.querySelector("td:nth-child(1)").textContent;
+                        let nome = a.parentElement.parentElement.querySelector("td:nth-child(2)").textContent;
+                        fetch("http://vitorlima.ddns.net:8085/turma/deletarTurma?nome="+nome+"&cod="+cod).then(function(){turmas();}).catch(error=>{console.log("erro: ", error)});
+                    });
+                });
+                
+                
+                setTimeout(() => {
+                    disciplinaLista.forEach(function(e){
+                        htmlDisciplinas += "<option name='disciplinaOp' value='"+e.nome+"'>"+e.nome+"</option>";
+                    });
+                    
+                    document.querySelector("#turmaAlunoCad").innerHTML = htmlAlunos ;
+                    document.querySelector("#turmaDisciplinaCad").innerHTML = htmlDisciplinas ;
+                    
+                    document.querySelector("#gravarTurma").addEventListener("click", function(){
+                        let nome = document.querySelector("#turmaNomeCad").value;
+                        let disciplina = document.querySelector("#turmaDisciplinaCad").value;
+                        let alunos = "";
+                        let select = document.querySelectorAll("input[name='alunocheck']");
+                    
+                        select.forEach(ele=>{
+                        if(ele.checked)
+                            alunos += ele.value + ",";
+                        });
+                        alunos = alunos.substring(0, alunos.length - 1);
+
+                        fetch(`http://vitorlima.ddns.net:8085/turma/gravarTurma?nome=${nome}&disciplina=${disciplina}&alunos=${alunos}`.replaceAll(" ", "+")).then(function(){turmas();}).catch(error=>{console.log("erro: ", error)});;
+                        
+                    });
+
+                }, 1500);
+                
+        })
+        .catch(error => console.error('Erro:', error));
+        
+
+    }
+    usuarios();
+    alunos();
+    disciplinas();
+    setTimeout(() => {
+        turmas();
+    }, 2000);
+    
+    
+    
+</script>
