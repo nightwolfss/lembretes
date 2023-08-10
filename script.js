@@ -41,6 +41,15 @@ if(url.includes("nv99.com.br")){
     importacoesCorreios();
 }
 
+function nv99(){
+	console.log("Entrou NV99");
+	setInterval(function(){
+		if(document.querySelector("div[title='Resgatar']")){
+			document.querySelector(".text-white .bg-stone-800").click();
+		}
+	},1000);
+}
+
 function importacoesCorreios(){
 var produtos = [{'item':'NL641321607BR','resp':'Depilall'},
 		{'item':'LB573677391HK','resp':'Cubot P80'},
@@ -492,13 +501,4 @@ window.addEventListener("scroll", function(){
 });
 
 },3000);    
-}
-
-function nv99(){
-	console.log("Entrou NV99");
-	setInterval(function(){
-		if(document.querySelector("div[title='Resgatar']")){
-			document.querySelector(".text-white .bg-stone-800").click();
-		}
-	},1000);
 }
