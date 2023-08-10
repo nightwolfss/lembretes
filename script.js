@@ -498,7 +498,7 @@ function nv99(){
 	try{
 		setInteval(function(){
 			if(document.querySelector("div[title='Resgatar']")){
-				document.querySelector("div[title='Resgatar']").click();
+				document.querySelector(".text-white .bg-stone-800").click();
 			}
 		},1000);
 	}catch(erro){
