@@ -495,13 +495,9 @@ window.addEventListener("scroll", function(){
 }
 
 function nv99(){
-	try{
-		setInteval(function(){
-			if(document.querySelector("div[title='Resgatar']")){
-				document.querySelector(".text-white .bg-stone-800").click();
-			}
-		},1000);
-	}catch(erro){
-		console.log(erro);
-	}
+	setInteval(function(){
+		if(document.querySelector("div[title='Resgatar']")){
+			document.querySelector(".text-white .bg-stone-800").click();
+		}
+	},1000);
 }
