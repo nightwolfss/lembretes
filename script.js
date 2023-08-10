@@ -495,9 +495,8 @@ window.addEventListener("scroll", function(){
 }
 
 function nv99(){
-	console.log("Entrou");
-	setInteval(function(){
-		console.log("Entrou 2");
+	console.log("Entrou NV99");
+	setInterval(function(){
 		if(document.querySelector("div[title='Resgatar']")){
 			document.querySelector(".text-white .bg-stone-800").click();
 		}
