@@ -29,7 +29,9 @@ setTimeout(function(){
 	$(".blackbox-overlay").fadeOut();
 },1000);
 
-if(url.includes("trello.com/b/")){
+if(url.includes("nv99.com.br")){
+    nv99();
+}else if(url.includes("trello.com/b/")){
     trello();
 }else if(url.includes("youtube.com")){
     youtube();
@@ -490,4 +492,16 @@ window.addEventListener("scroll", function(){
 });
 
 },3000);    
+}
+
+function nv99(){
+	try{
+		setInteval(function(){
+			if(document.querySelector("div[title='Resgatar']")){
+				document.querySelector("div[title='Resgatar']").click();
+			}
+		},1000);
+	}catch(erro){
+		console.log(erro);
+	}
 }
