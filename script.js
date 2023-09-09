@@ -347,10 +347,15 @@ function pular(){
           if(ele.querySelector("#channel-name").innerText.toLowerCase().includes(block.toLowerCase())){
               ele.closest("ytd-rich-item-renderer").remove();
               mensagem(block + " removido. (Canal)");
-          }
-        
-        
+          }        
       });
+	});
+
+	//deletar canais indesejados da lista de resultados da busca.
+	document.querySelectorAll("#dismissible").forEach((ele)=>{
+		if(ele.textContent.toLowerCase().includes(block.toLowerCase())){
+			ele.remove();
+		}
 	});
 ///////////////////
     document.querySelectorAll("ytd-rich-grid-row ytd-rich-item-renderer #meta").forEach((ele)=>{
