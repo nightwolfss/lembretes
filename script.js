@@ -352,10 +352,12 @@ function pular(){
 	});
 
 	//deletar canais indesejados da lista de resultados da busca.
+	listaBloqueados.forEach(function(block){
 	document.querySelectorAll("#dismissible").forEach((ele)=>{
 		if(ele.textContent.toLowerCase().includes(block.toLowerCase())){
 			ele.remove();
 		}
+	});
 	});
 ///////////////////
     document.querySelectorAll("ytd-rich-grid-row ytd-rich-item-renderer #meta").forEach((ele)=>{
