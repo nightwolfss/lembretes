@@ -304,7 +304,7 @@ const pularprop = setInterval(() => {
     var pular = document.querySelector(".ytp-ad-skip-button");
     var pular2 = document.querySelector(".ytp-ad-overlay-close-button");
     var pular3 = document.querySelector("tp-yt-paper-dialog .yt-spec-touch-feedback-shape__fill");
-    if (pular || pular2) {
+    if (pular || pular2 || pular3) {
         if (pular) {
             pular.click();
             mensagem("Propaganda fechada!!");
