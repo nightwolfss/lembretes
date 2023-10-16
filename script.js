@@ -303,6 +303,7 @@ speed();
 const pularprop = setInterval(() => {
     var pular = document.querySelector(".ytp-ad-skip-button");
     var pular2 = document.querySelector(".ytp-ad-overlay-close-button");
+    var pular3 = document.querySelector("tp-yt-paper-dialog .yt-spec-touch-feedback-shape__fill");
     if (pular || pular2) {
         if (pular) {
             pular.click();
@@ -311,6 +312,10 @@ const pularprop = setInterval(() => {
         if (pular2) {
             pular2.click();
             mensagem("Banner fechado!!");
+        }
+	if (pular3) {
+            pular3.click();
+            mensagem("Bloqueio ADS fechado.");
         }
     }
 }, 1000);
