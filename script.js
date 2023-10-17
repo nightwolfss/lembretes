@@ -315,6 +315,7 @@ const pularprop = setInterval(() => {
         }
 	if (pular3) {
             pular3.click();
+	    document.querySelector(".ytp-play-button.ytp-button").click();
             mensagem("Bloqueio ADS fechado.");
         }
     }
