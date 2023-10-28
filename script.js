@@ -6,7 +6,7 @@ var url = window.location.href;
 
 var blackbox = setInterval(function(){
     if(document.querySelector(".drawer-control-x-button.blackbox-button-holder").style.display != ""){
-    	document.querySelector(".blackbox-overlay").style.display = 'none';
+    	document.querySelector(".drawer-control-x-button.blackbox-button-holder").style.display = "";
         clearInterval(blackbox);
     }
 },500);
