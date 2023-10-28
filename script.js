@@ -4,11 +4,12 @@ var url = window.location.href;
 //     document.querySelector(".blackbox-overlay").style.display = 'none';
 // });
 
-//document.querySelector(".drawer-control-x-button.blackbox-button-holder").addEventListener("load", function(){
-	// setTimeout(function(){
-	// 	document.querySelector(".blackbox-overlay").style.display = 'none';
-	// },3000);
-//});
+var blackbox = setInterval(function(){
+    if(document.querySelector(".drawer-control-x-button.blackbox-button-holder").style.display != ""){
+    	document.querySelector(".blackbox-overlay").style.display = 'none';
+        clearInterval(blackbox);
+    }
+},500);
 
 
 // Função para carregar o jQuery dinamicamente
