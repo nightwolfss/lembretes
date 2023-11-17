@@ -367,6 +367,13 @@ function pular(){
 	});
 	});
 ///////////////////
+
+var pularComercialYoutube = setInterval(()=>{
+    if(document.querySelector("span > .ytp-ad-skip-button-modern.ytp-button").textContent == "Pular"){
+    document.querySelector("span > .ytp-ad-skip-button-modern.ytp-button").click();
+}
+}, 1000);
+//////////////////
     document.querySelectorAll("ytd-rich-grid-row ytd-rich-item-renderer #meta").forEach((ele)=>{
       ele.closest("ytd-rich-item-renderer").style.backgroundColor = '';
       meusCanais.forEach(function(brilhar){
