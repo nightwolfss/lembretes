@@ -36,7 +36,7 @@ if(url.includes("nv99.com.br")){
     trello();
 }else if(url.includes("youtube.com")){
     youtube();
-}else if(url.includes("oq=brasileirao") || url.includes("oq=brasileirão") || url.includes("google.com/search?q=campeonato+brasileiro")){
+}else if(url.includes("?q=brasileirao") || url.includes("?q=brasileirão") || url.includes("google.com/search?q=campeonato+brasileiro")){
     brasileirao();
 }else if(url.includes("https://apps.correios.com.br/portalimportador/pages/pesquisarRemessaImportador/pesquisarRemessaImportador.jsf")){
     importacoesCorreios();
