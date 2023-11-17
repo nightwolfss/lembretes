@@ -369,9 +369,10 @@ function pular(){
 ///////////////////
 var pularComercialYoutube = setInterval(function(){
 	try{    
-	    document.querySelector("span > .ytp-ad-skip-button-modern.ytp-button").click();
+	    	document.querySelector("span > .ytp-ad-skip-button-modern.ytp-button").click();
+		console.log("Comercial Fechado.")
 	} catch (error) {
-	    console.log("falha: " + error);
+	    	console.log("falha: " + error);
 	}
 	}, 1000);
 //////////////////
