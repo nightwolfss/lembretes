@@ -148,8 +148,8 @@ function trello(){
 }
 
 function youtube(){
-alert("teste");
 var youtube = setTimeout(function(){
+	console.log(new Date());
 var barraControle = document.querySelector("#movie_player > div.ytp-chrome-bottom > div.ytp-chrome-controls > div.ytp-left-controls");
 var botaoMais = document.createElement("button");
 var botaoMenos = document.createElement("button");
