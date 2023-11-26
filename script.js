@@ -378,9 +378,16 @@ var pularComercialYoutube = setInterval(function(){
 	    	document.querySelector("span > .ytp-ad-skip-button-modern.ytp-button").click();
 		console.log("Comercial Fechado.")
 	} catch (error) {
-	    	console.log("falha: " + error);
+	    	//console.log("falha: " + error);
 	}
 	}, 1000);
+
+	try{
+		document.querySelector("div.video-ads.ytp-ad-module button.ytp-ad-skip-button-modern.ytp-button").click();
+		mensagem("Comercial Fechado!!");
+	}catch{
+		
+	}
 //////////////////
     document.querySelectorAll("ytd-rich-grid-row ytd-rich-item-renderer #meta").forEach((ele)=>{
       ele.closest("ytd-rich-item-renderer").style.backgroundColor = '';
