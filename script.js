@@ -1,5 +1,5 @@
 var url = window.location.href;
-
+alert("teste");
 // document.querySelector(".drawer-control-x-button.blackbox-button-holder").addEventListener("click", function(){
 //     document.querySelector(".blackbox-overlay").style.display = 'none';
 // });
