@@ -1,5 +1,4 @@
 var url = window.location.href;
-alert("teste");
 // document.querySelector(".drawer-control-x-button.blackbox-button-holder").addEventListener("click", function(){
 //     document.querySelector(".blackbox-overlay").style.display = 'none';
 // });
@@ -149,6 +148,7 @@ function trello(){
 }
 
 function youtube(){
+alert("teste");
 var youtube = setTimeout(function(){
 var barraControle = document.querySelector("#movie_player > div.ytp-chrome-bottom > div.ytp-chrome-controls > div.ytp-left-controls");
 var botaoMais = document.createElement("button");
