@@ -305,7 +305,8 @@ const pularprop = setInterval(() => {
     var pular = document.querySelector(".ytp-ad-skip-button");
     var pular2 = document.querySelector(".ytp-ad-overlay-close-button");
     var pular3 = document.querySelector("tp-yt-paper-dialog .yt-spec-touch-feedback-shape__fill");
-    if (pular || pular2 || pular3) {
+    var pular4 = document.querySelector("div.video-ads.ytp-ad-module button.ytp-ad-skip-button-modern.ytp-button");
+    if (pular || pular2 || pular3 || pular4) {
         if (pular) {
             pular.click();
             mensagem("Propaganda fechada!!");
@@ -318,6 +319,11 @@ const pularprop = setInterval(() => {
             pular3.click();
 	    document.querySelector(".ytp-play-button.ytp-button").click();
             mensagem("Bloqueio ADS fechado.");
+        }
+	    if (pular4) {
+	    pular4.click();
+	    document.querySelector("div.video-ads.ytp-ad-module button.ytp-ad-skip-button-modern.ytp-button").click();
+	    mensagem("Bloqueio ADS fechado.");
         }
     }
 }, 1000);
