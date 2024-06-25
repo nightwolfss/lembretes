@@ -302,10 +302,11 @@ speed();
 //-------
 //Pular comercial
 const pularprop = setInterval(() => {
-    var pular = document.querySelector(".ytp-ad-skip-button");
+    var pular = document.querySelector(".video-ads.ytp-ad-module .ytp-ad-player-overlay-layout .ytp-ad-player-overlay-layout__skip-or-preview-container .ytp-skip-ad-button");
     var pular2 = document.querySelector(".ytp-ad-overlay-close-button");
     var pular3 = document.querySelector("tp-yt-paper-dialog .yt-spec-touch-feedback-shape__fill");
     var pular4 = document.querySelector("div.video-ads.ytp-ad-module button.ytp-ad-skip-button-modern.ytp-button");
+    var pular5 = document.querySelector("#secondary > #secondary-inner > #panels");
     if (pular || pular2 || pular3 || pular4) {
         if (pular) {
             pular.click();
@@ -324,6 +325,10 @@ const pularprop = setInterval(() => {
 	    pular4.click();
 	    document.querySelector("div.video-ads.ytp-ad-module button.ytp-ad-skip-button-modern.ytp-button").click();
 	    mensagem("Bloqueio ADS fechado.");
+        }
+	    if (pular5) {
+            pular5.style.display = "none";
+            mensagem("ADS lateral fechado.");
         }
     }
 }, 1000);
