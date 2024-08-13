@@ -145,7 +145,7 @@
       })
       .then((data) => {
         // Manipula os dados recebidos (aqui você pode fazer o que precisar com os dados)
-          document.querySelector("#letraCompleta").innerHTML ="<hr>" +(data.mus[0].text.replaceAll("\n","<br>"));
+          document.querySelector("#letraCompleta").innerHTML ="<hr><h4>" +(data.mus[0].text.replaceAll("\n","<br>") + "</h4>");
           (data.mus[0].text);
 
           document.querySelector("#btnHidden").click();
