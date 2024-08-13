@@ -110,7 +110,7 @@
 
         document.querySelector("#louvor").addEventListener("keyup", function (ele) {
             document.querySelectorAll("#letras span").forEach((ele) => {
-              if (!ele.textContent.toLocaleLowerCase().includes(document.querySelector("#louvor").value)
+              if (!ele.textContent.toLocaleLowerCase().includes(document.querySelector("#louvor").value.toLocaleLowerCase())
               ) {
                 ele.style.display = "none";
               } else {
