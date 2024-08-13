@@ -78,6 +78,7 @@
 
         document.querySelectorAll("#artistas span").forEach((ele) => {
           ele.addEventListener("click", function () {
+            document.querySelector("#ancora").click();
             buscaMusicas(normalizeString(ele.textContent.toLocaleLowerCase().replaceAll(" ", "-")));
           });
         });
@@ -122,7 +123,6 @@
           document.querySelectorAll("#letras span").forEach((ele) => {
           ele.addEventListener("click", function () {
             buscarLetra(normalizeString(artista), normalizeString(ele.textContent.toLocaleLowerCase().replaceAll(" ", "-")));
-              document.querySelector("#ancora").click();
           });
         });
       })
