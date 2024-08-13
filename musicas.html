@@ -10,6 +10,51 @@
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           rel="stylesheet"
         />
+
+        <style>
+            body {
+                /* Configura a imagem de fundo */
+                background-image: url('https://e0.pxfuel.com/wallpapers/296/866/desktop-wallpaper-express-music-nokia-mobile.jpg');
+                background-size: cover; /* Faz com que a imagem cubra toda a página */
+                background-attachment: fixed; /* Fixa a imagem ao fundo */
+                background-position: center; /* Centraliza a imagem */
+                background-repeat: no-repeat; /* Evita a repetição da imagem */
+                opacity: 1; /* Define a opacidade */
+                height: 100vh;
+                margin: 0;
+                color: aliceblue;
+            }
+    
+            /* Estilo para conteúdo */
+            .content {
+                position: relative;
+                z-index: 1;
+                color: white;
+                text-align: center;
+                padding-top: 20%;
+            }
+
+            .preto{
+                color: black;
+            }
+    
+            /* Ajustando opacidade apenas para o fundo */
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: inherit;
+                background-size: inherit;
+                background-attachment: inherit;
+                background-position: inherit;
+                background-repeat: inherit;
+                z-index: -1;
+                opacity: 0.2; /* Opacidade do background */
+            }
+        </style>
       </head>
 
   <body class="container mt-4">
@@ -27,7 +72,7 @@
     <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <div id="letraCompleta" class="p-3"></div>
+                <div id="letraCompleta" class="p-3 preto"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
@@ -61,10 +106,10 @@
         return response.json();
       })
       .then((data) => {
-        let listaArtistas = "Lista de Artistas<br><br>";
+        let listaArtistas = "<h2>Lista de Artistas</h2><br>";
         // Manipula os dados recebidos (aqui você pode fazer o que precisar com os dados)
         data.response.docs.forEach((ele) => {
-          listaArtistas += "<span>" + ele.band + "<hr></span>";
+          listaArtistas += "<span><h5>" + ele.band + "</h5><hr></span>";
         });
         document.querySelector("#artistas").innerHTML = listaArtistas;
 
@@ -104,7 +149,7 @@
         let listaMusicas = "Músicas: <input type='text' class='form-control' id='louvor'><br>";
         // Manipula os dados recebidos (aqui você pode fazer o que precisar com os dados)
         data.artist.lyrics.item.forEach((ele) => {
-          listaMusicas += "<span>" + ele.desc + "<br></span>";
+          listaMusicas += "<span><h5>" + ele.desc + "</h5><hr></span>";
         });
 
         document.querySelector("#letras").innerHTML = listaMusicas;
