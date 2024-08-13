@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Músicas</title>
+        <!-- Bootstrap CSS -->
+        <link
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          rel="stylesheet"
+        />
+      </head>
+
+  <body class="container mt-4">
+    <h1>Letras de Musica</h1> <hr>
+    Artista: <input type="text" id="artista" name="artista" class="form-control"/>
+    <br />
+    <hr />
+    <div id="artistas"></div>
+    <br /><br />
+    <div id="letras"></div>
+
+    <!-- Modal for Lyrics -->
+    <button type="button" id="btnHidden" style="display: none;" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Small modal</button>
+
+    <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div id="letraCompleta" class="p-3"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </body>
+</html>
+
+ <!-- Bootstrap JS and dependencies -->
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  document.querySelector("#artista").addEventListener("keyup", function (ele) {
+    buscarArtista(this.value.toLocaleLowerCase().trim());
+  });
+  function buscarArtista(a) {
+    fetch(
+      `https://api.vagalume.com.br/search.art?apikey=660a4395f992ff67786584e238f501aa&q=${a}&limit=30`
+    )
+      .then((response) => {
+        // Verifica se a resposta da solicitação foi bem-sucedida (código 200)
+        if (!response.ok) {
+          throw new Error(`Erro de rede: ${response.status}`);
+        }
+
+        // Converte a resposta para JSON
+        return response.json();
+      })
+      .then((data) => {
+        let listaArtistas = "Lista de Artistas<br><br>";
+        // Manipula os dados recebidos (aqui você pode fazer o que precisar com os dados)
+        data.response.docs.forEach((ele) => {
+          listaArtistas += "<span>" + ele.band + "<hr></span>";
+        });
+        document.querySelector("#artistas").innerHTML = listaArtistas;
+
+        document.querySelectorAll("#artistas span").forEach((ele) => {
+          if (!ele.textContent.toLocaleLowerCase().includes(a)) {
+            ele.style.display = "none";
+          } else {
+            ele.style.display = "";
+          }
+        });
+
+        document.querySelectorAll("#artistas span").forEach((ele) => {
+          ele.addEventListener("click", function () {
+            buscaMusicas(normalizeString(ele.textContent.toLocaleLowerCase().replaceAll(" ", "-")));
+          });
+        });
+      })
+      .catch((error) => {
+        // Manipula erros durante a solicitação
+        console.error("Erro durante a solicitação:", error.message);
+      });
+  }
+
+  function buscaMusicas(artista) {
+    fetch(`https://www.vagalume.com.br/${artista}/index.js`)
+      .then((response) => {
+        // Verifica se a resposta da solicitação foi bem-sucedida (código 200)
+        if (!response.ok) {
+          throw new Error(`Erro de rede: ${response.status}`);
+        }
+
+        // Converte a resposta para JSON
+        return response.json();
+      })
+      .then((data) => {
+        let listaMusicas = "Músicas: <input type='text' class='form-control' id='louvor'><br>";
+        // Manipula os dados recebidos (aqui você pode fazer o que precisar com os dados)
+        data.artist.lyrics.item.forEach((ele) => {
+          listaMusicas += "<span>" + ele.desc + "<br></span>";
+        });
+
+        document.querySelector("#letras").innerHTML = listaMusicas;
+
+        document.querySelector("#louvor").addEventListener("keyup", function (ele) {
+            document.querySelectorAll("#letras span").forEach((ele) => {
+              if (!ele.textContent.toLocaleLowerCase().includes(document.querySelector("#louvor").value)
+              ) {
+                ele.style.display = "none";
+              } else {
+                ele.style.display = "";
+              }
+            });
+          });
+
+          document.querySelectorAll("#letras span").forEach((ele) => {
+          ele.addEventListener("click", function () {
+            buscarLetra(normalizeString(artista), normalizeString(ele.textContent.toLocaleLowerCase().replaceAll(" ", "-")));
+          });
+        });
+      })
+      .catch((error) => {
+        // Manipula erros durante a solicitação
+        console.error("Erro durante a solicitação:", error.message);
+      });
+  }
+
+  function buscarLetra(artista, musica) {
+    fetch(`https://api.vagalume.com.br/search.php?apikey=660a4395f992ff67786584e238f501aa&art=${artista}&mus=${musica}`)
+      .then((response) => {
+        // Verifica se a resposta da solicitação foi bem-sucedida (código 200)
+        if (!response.ok) {
+          throw new Error(`Erro de rede: ${response.status}`);
+        }
+        console.log(`https://api.vagalume.com.br/search.php?apikey=660a4395f992ff67786584e238f501aa&art=${artista}&mus=${musica}`);
+        // Converte a resposta para JSON
+        return response.json();
+      })
+      .then((data) => {
+        // Manipula os dados recebidos (aqui você pode fazer o que precisar com os dados)
+          document.querySelector("#letraCompleta").innerHTML ="<hr>" +(data.mus[0].text.replaceAll("\n","<br>"));
+          (data.mus[0].text);
+
+          document.querySelector("#btnHidden").click();
+      })
+      .catch((error) => {
+        // Manipula erros durante a solicitação
+        console.error("Erro durante a solicitação:", error.message);
+      });
+  }
+
+  function normalizeString(str) {
+  return str
+    .normalize("NFD") // Decompõe os caracteres com acentos em suas partes
+    .replace(/[\u0300-\u036f]/g, "") // Remove os diacríticos (acentos)
+    .replace(/ç/g, "c") // Substitui 'ç' por 'c'
+    .replace(/[^a-zA-Z0-9\- ]/g, ""); // Remove caracteres especiais, mantendo apenas letras, ífem, números e espaços
+}
+</script>
