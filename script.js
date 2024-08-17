@@ -302,12 +302,14 @@ speed();
 //-------
 //Pular comercial
 const pularprop = setInterval(() => {
-    var pular = document.querySelector(".video-ads.ytp-ad-module .ytp-ad-player-overlay-layout .ytp-ad-player-overlay-layout__skip-or-preview-container .ytp-skip-ad-button");
-    var pular2 = document.querySelector(".ytp-ad-overlay-close-button");
+    	var pular = document.querySelector(".ytp-skip-ad > button");
+	var pular2 = document.querySelector("#player-ads");
+//var pular = document.querySelector(".video-ads.ytp-ad-module .ytp-ad-player-overlay-layout .ytp-ad-player-overlay-layout__skip-or-preview-container .ytp-skip-ad-button");
+/*    var pular2 = document.querySelector(".ytp-ad-overlay-close-button");
     var pular3 = document.querySelector("tp-yt-paper-dialog .yt-spec-touch-feedback-shape__fill");
     var pular4 = document.querySelector("div.video-ads.ytp-ad-module button.ytp-ad-skip-button-modern.ytp-button");
-    var pular5 = document.querySelector("#secondary > #secondary-inner > #panels");
-    if (pular || pular2 || pular3 || pular4) {
+    var pular5 = document.querySelector("#secondary > #secondary-inner > #panels");*/
+    if (pular || pular2 /*|| pular3 || pular4*/) {
         if (pular) {
             pular.click();
             mensagem("Propaganda fechada!!");
@@ -316,7 +318,7 @@ const pularprop = setInterval(() => {
             pular2.click();
             mensagem("Banner fechado!!");
         }
-	if (pular3) {
+/*	if (pular3) {
             pular3.click();
 	    document.querySelector(".ytp-play-button.ytp-button").click();
             mensagem("Bloqueio ADS fechado.");
@@ -330,6 +332,7 @@ const pularprop = setInterval(() => {
             pular5.style.display = "none";
             mensagem("ADS lateral fechado.");
         }
+	*/
     }
 }, 1000);
 
@@ -340,12 +343,15 @@ var meusCanais = [{"nome":"Pedro Loos","cor":"LightSteelBlue"},{"nome":"Léo Lin
 
 function pular(){
 
-    var listaBloquear = [document.querySelector(".ytp-ad-skip-button"),
+    var listaBloquear = [document.querySelector(".ytp-skip-ad > button"), document.querySelector("#player-ads")];
+	    
+	    	/*	[document.querySelector(".ytp-ad-skip-button"),
                         document.querySelector(".ytp-ad-overlay-close-button"),
                         document.querySelectorAll("ytd-merch-shelf-renderer")[0],
                         document.querySelector("ytd-video-masthead-ad-v3-renderer.style-scope.ytd-rich-grid-renderer.grid"),
                         document.querySelector("ytd-promoted-sparkles-web-renderer.style-scope.ytd-item-section-renderer.sparkles-light-cta"),
                         document.querySelector("#player-ads")];
+			*/
 
     listaBloquear.forEach(function(ele){
         if(ele){
