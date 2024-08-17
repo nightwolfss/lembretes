@@ -2,14 +2,14 @@ var url = window.location.href;
 // document.querySelector(".drawer-control-x-button.blackbox-button-holder").addEventListener("click", function(){
 //     document.querySelector(".blackbox-overlay").style.display = 'none';
 // });
-
+/*
 var blackbox = setInterval(function(){
     if(document.querySelector(".drawer-control-x-button.blackbox-button-holder").style.display != ""){
     	document.querySelector(".drawer-control-x-button.blackbox-button-holder").style.display = "";
         clearInterval(blackbox);
     }
 },500);
-
+*/
 
 // Função para carregar o jQuery dinamicamente
 /*
