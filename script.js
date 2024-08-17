@@ -12,6 +12,7 @@ var blackbox = setInterval(function(){
 
 
 // Função para carregar o jQuery dinamicamente
+/*
 function loadJQuery() {
 var script = document.createElement("script");
 script.src = "https://code.jquery.com/jquery-3.6.0.min.js";
@@ -28,7 +29,7 @@ loadJQuery();
 setTimeout(function(){
 	$(".blackbox-overlay").fadeOut();
 },1000);
-
+*/
 if(url.includes("nv99.com.br")){
     nv99();
 }else if(url.includes("trello.com/b/")){
