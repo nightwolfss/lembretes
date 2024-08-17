@@ -161,12 +161,12 @@ divBotoes.setAttribute("style", "width: 100%");
 
 botaoMais.setAttribute("style", "position fixed; color: green; text-align: center;");
 botaoMais.setAttribute("id", "botaoMais");
-botaoMais.innerHTML = " + ";
+botaoMais.innerHTML = " &#43; ";
 
 botaoMenos.setAttribute("style", "position fixed; margin-left: 5px;  margin-right: 15px; color: red; text-align: center;");
 botaoMenos.innertext = "-";
 botaoMenos.setAttribute("id","botaoMenos");
-botaoMenos.innerHTML = " - ";
+botaoMenos.innerHTML = " &#8722 ";
 
 divBotoes.appendChild(botaoMais);
 divBotoes.appendChild(botaoMenos);
