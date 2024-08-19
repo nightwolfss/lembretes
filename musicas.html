@@ -67,10 +67,10 @@
     <div id="letras"></div>
 <a id="ancora" href="#letras"></a>
     <!-- Modal for Lyrics -->
-    <button type="button" id="btnHidden" style="display: none;" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Small modal</button>
+    <button type="button" id="btnHidden" style="display: none;" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Small modal</button>
 
-    <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div id="letraCompleta" class="p-3 preto"></div>
                 <div class="modal-footer">
@@ -149,7 +149,7 @@
         let listaMusicas = "Músicas: <input type='text' class='form-control' id='louvor'><br>";
         // Manipula os dados recebidos (aqui você pode fazer o que precisar com os dados)
         data.artist.lyrics.item.forEach((ele) => {
-          listaMusicas += "<span><h5>" + ele.desc + "</h5><hr></span>";
+          listaMusicas += "<span><h5>" + ele.desc + "</h5><span style='display:none'>" + ele.id + "</span><hr></span>";
         });
 
         document.querySelector("#letras").innerHTML = listaMusicas;
@@ -167,7 +167,8 @@
 
           document.querySelectorAll("#letras span").forEach((ele) => {
           ele.addEventListener("click", function () {
-            buscarLetra(normalizeString(artista), normalizeString(ele.textContent.toLocaleLowerCase().replaceAll(" ", "-")));
+            console.log("AAAAAA: "+ele.querySelector("span").textContent);
+            buscarLetra(artista, ele.querySelector("span").textContent);
           });
         });
       })
@@ -178,21 +179,20 @@
   }
 
   function buscarLetra(artista, musica) {
-    fetch(`https://api.vagalume.com.br/search.php?apikey=660a4395f992ff67786584e238f501aa&art=${artista}&mus=${musica}`)
+    fetch(`https://api.vagalume.com.br/search.php?apikey=660a4395f992ff67786584e238f501aa&art=${artista}&musid=${musica}`)
       .then((response) => {
         // Verifica se a resposta da solicitação foi bem-sucedida (código 200)
         if (!response.ok) {
           throw new Error(`Erro de rede: ${response.status}`);
         }
-        console.log(`https://api.vagalume.com.br/search.php?apikey=660a4395f992ff67786584e238f501aa&art=${artista}&mus=${musica}`);
+        // console.log(`https://api.vagalume.com.br/search.php?apikey=660a4395f992ff67786584e238f501aa&art=${artista}&musId=${musica}`);
         // Converte a resposta para JSON
         return response.json();
       })
       .then((data) => {
         // Manipula os dados recebidos (aqui você pode fazer o que precisar com os dados)
-          document.querySelector("#letraCompleta").innerHTML = "<h2>" + musica.replaceAll("-"," ") + "</h2><hr><h4>" +(data.mus[0].text.replaceAll("\n","<br>") + "</h4>");
-          (data.mus[0].text);
-
+          document.querySelector("#letraCompleta").innerHTML = "<h2>"+(data.mus[0].name)+"</h2><hr><span>"+ data.art.name +"</span><hr><h4>"+(data.mus[0].text.replaceAll("\n","<br>")) + "</h4>";
+          console.log(data);
           document.querySelector("#btnHidden").click();
       })
       .catch((error) => {
