@@ -313,7 +313,7 @@ const pularprop = setInterval(() => {
     if (pular || pular2 /*|| pular3 || pular4*/) {
         if (pular) {
             pular.click();
-		pular.parentElement.remove();
+	//	pular.parentElement.remove();
 		
             mensagem("Propaganda fechada!!");
         }
