@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -58,7 +59,8 @@
       </head>
 
   <body class="container mt-4">
-    <h1>Letras de Musica</h1> <hr>
+    <h1>Buscar Letras</h1> <hr>
+    <a href="http://vitorlima.ddns.net:8085/listarDados">Lista de louvores</a><br><br>
     Artista: <input type="text" id="artista" name="artista" class="form-control"/>
     <br />
     <hr />
@@ -74,6 +76,7 @@
             <div class="modal-content">
                 <div id="letraCompleta" class="p-3 preto"></div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-info" id="add">Adicionar</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
             </div>
@@ -200,6 +203,42 @@
         console.error("Erro durante a solicitação:", error.message);
       });
   }
+
+  document.querySelector("#add").addEventListener("click", function() {
+
+    //let codigo = document.querySelector("#codigo").textContent;
+    let cantor = normalizeString(document.querySelector("#letraCompleta span").textContent);
+    let musica = normalizeString(document.querySelector("#letraCompleta h2").textContent);
+    let letra = normalizeString(document.querySelector("#letraCompleta h4").innerHTML.replaceAll("<br>", "---"));
+
+    // Codifica os parâmetros para a URL
+    cantor = encodeURIComponent(cantor);
+    musica = encodeURIComponent(musica);
+    letra = encodeURIComponent(letra);
+
+    setTimeout(function() {
+
+      // Constrói a URL
+      let url = `http://vitorlima.ddns.net:8085/salvardados?codigo=0&cantor=${cantor}&musica=${musica}&letra=${letra}`;
+      console.log(url);
+      fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erro de rede: ${response.status}`);
+        }
+        return response.text(); // Use response.json() se você espera JSON
+      })
+      .then(data => {
+        console.log("Resposta do servidor:", data);
+        alert("Salvo com sucesso!!");
+      })
+      .catch(function(error) {
+        console.log("Erro na requisição:", error);
+      });
+    }, 500);
+
+});
+
 
   function normalizeString(str) {
   return str
