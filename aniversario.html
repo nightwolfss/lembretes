@@ -460,7 +460,6 @@ pessoasComDias.forEach(pessoa => {
           justify-content: space-between;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         ">
-          <div style="display: flex; align-items: center; justify-content: space-between; background-color: #f5e6ff; border-radius: 12px; padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); margin-bottom: 16px;">
           <div style="flex: 1;">
             <h5 style="margin: 0 0 10px 0; font-size: 18px; font-weight: 600; color: #dddddd; text-shadow: 1px 1px 2px #000000;">
               ${pessoa.id} - ${pessoa.nome}
@@ -472,11 +471,9 @@ pessoasComDias.forEach(pessoa => {
           </div>
           <div>
             <img src="imagens/${pessoa.nome}.png"
-             alt="Foto de ${pessoa.nome}"
-             onclick="abrirModal('${pessoa.nome}.png')"
-             onerror="this.onerror=null; this.src='imagens/sem_imagem.png';"
-             style="max-height: 100px; border-radius: 8px; margin-left: 20px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-
+                 alt="Foto de ${pessoa.nome}"
+                 onclick="abrirModal('${pessoa.nome}.png')"
+                 style="max-height: 100px; border-radius: 8px; margin-left: 20px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
           </div>
         </div>
       </td>
