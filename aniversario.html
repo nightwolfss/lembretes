@@ -338,6 +338,31 @@
         nome: "Izabel",
         nascimento: "1900-11-29",
         foto: ""
+},{
+        id: 36,
+        nome: "Anelise",
+        nascimento: "1900-05-03",
+        foto: ""
+},{
+        id: 37,
+        nome: "Raphael",
+        nascimento: "1900-05-05",
+        foto: ""
+},{
+        id: 38,
+        nome: "Fábio (Diacono)",
+        nascimento: "1900-05-06",
+        foto: ""
+},{
+        id: 39,
+        nome: "Lúcia de Jesus (Diaconiza)",
+        nascimento: "1900-05-07",
+        foto: ""
+},{
+        id: 40,
+        nome: "Raphaela",
+        nascimento: "1900-05-11",
+        foto: ""
 },
     ];
 
@@ -446,9 +471,11 @@ pessoasComDias.forEach(pessoa => {
           </div>
           <div>
             <img src="imagens/${pessoa.nome}.png"
-                 alt="Foto de ${pessoa.nome}"
-                 onclick="abrirModal('${pessoa.nome}.png')"
-                 style="max-height: 100px; border-radius: 8px; margin-left: 20px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+             alt="Foto de ${pessoa.nome}"
+             onclick="abrirModal('${pessoa.nome}.png')"
+             onerror="this.onerror=null; this.src='https://polocaratinga.unifaveni.com/wp-content/uploads/sites/11/2017/02/avatar-vazio-560x560.jpg';"
+             style="max-height: 100px; border-radius: 8px; margin-left: 20px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+
           </div>
         </div>
       </td>
