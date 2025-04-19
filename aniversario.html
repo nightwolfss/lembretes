@@ -450,7 +450,7 @@ pessoasComDias.forEach(pessoa => {
           <div>
             <img src="imagens/${pessoa.nome}.png"
                  alt="Foto de ${pessoa.nome}"
-                 onclick="abrirModal('${pessoa.nome}'.png)"
+                 onclick="abrirModal('${pessoa.nome}.png')"
                  style="max-height: 100px; border-radius: 8px; margin-left: 20px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
           </div>
         </div>
@@ -464,7 +464,7 @@ corpoTabela.innerHTML += "</tbody></table>";
     }
 
     function abrirModal(url) {
-      document.getElementById("modal-img").src = url;
+      document.getElementById("modal-img").src = `imagens/${url}`;
       document.getElementById("modal").style.display = "flex";
     }
 
