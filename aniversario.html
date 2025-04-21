@@ -471,7 +471,11 @@ pessoasComDias.forEach(pessoa => {
             </h5>
             <p style="margin: 0; font-size: 15px; color: #555;">
               ${formatarDataBR(pessoa.nascimento)} —
-              <strong>${pessoa.dias} dia${pessoa.dias !== 1 ? 's' : ''} faltando</strong>
+              <strong>
+                ${pessoa.dias === 0 
+                  ? 'É hoje!! 😍🎈🎉🎊' 
+                  : `${pessoa.dias} dia${pessoa.dias !== 1 ? 's' : ''} faltando`}
+              </strong>
             </p>
           </div>
           <div>
