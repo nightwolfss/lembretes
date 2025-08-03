@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Versículo em Português</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+  background: #f2f4f8;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* antes era center */
+  min-height: 100vh;
+  padding: 30px 20px; /* mais espaço no topo */
+  margin: 0;
+}
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin: 0;
+      font-size: 22px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #444;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .cap-ver-section {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .cap-ver-section > div {
+      flex: 1;
+      min-width: 45%;
+    }
+
+    .cap-ver-section button {
+      padding: 10px 16px;
+      background-color: #4a90e2;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      min-width: 40px;
+    }
+
+    .cap-ver-section button:hover {
+      background-color: #357bd8;
+    }
+
+    #versiculo {
+      background: #eef2f6;
+      padding: 15px;
+      border-radius: 8px;
+      color: #222;
+      font-size: 16px;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+      max-height: 200px;
+      overflow-y: auto;
+      word-wrap: break-word;
+    }
+    
+    .botoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.botoes button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.botoes button:hover {
+  background-color: #357bd8;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bíblia Sagrada - NVI</h1>
+
+    <div>
+      <label for="livro">Livro:</label>
+      <select id="livro"></select>
+    </div>
+
+    <div class="cap-ver-section">
+      <div>
+        <label for="cap">Capítulo:</label>
+        <select id="cap"></select>
+      </div>
+      <div>
+        <label for="ver">Versículo:</label>
+        <select id="ver"></select>
+      </div>
+      <div class="botoes">
+        <button id="prev">◀ Anterior</button>
+        <button id="next">Próximo ▶</button>
+    </div>
+
+    </div>
+
+    <div id="versiculo" aria-live="polite" aria-atomic="true">
+      Carregando...
+    </div>
+
+    <div>
+
+      <div class="botoes">
+        <button id="btnMais">+</button>
+        <button id="btnMenos">-</button>
+      </div>
+      <div class="botoes">Tamanho da fonte</div>
+    </div>
+      
+    <br>
+
+    <div id="comercial">
+        <img src="" width="100%" >
+    </div>
+  </div>
+
+  <script>
+    let biblia = [];
+    const livroSelect = document.getElementById("livro");
+    const capSelect = document.getElementById("cap");
+    const verSelect = document.getElementById("ver");
+    const versiculoDisplay = document.getElementById("versiculo");
+
+    fetch("https://raw.githubusercontent.com/thiagobodruk/bible/refs/heads/master/json/pt_acf.json")
+      .then(res => res.json())
+      .then(data => {
+        biblia = data;
+
+        biblia.forEach(livro => {
+          const option = document.createElement("option");
+          option.value = livro.name;
+          option.textContent = livro.name;
+          livroSelect.appendChild(option);
+        });
+
+        atualizarCapitulos();
+      });
+
+    livroSelect.addEventListener("change", atualizarCapitulos);
+    capSelect.addEventListener("change", atualizarVersiculos);
+    verSelect.addEventListener("change", mostrarVersiculo);
+
+    document.getElementById("prev").addEventListener("click", () => {
+      if (verSelect.selectedIndex > 0) {
+        verSelect.selectedIndex--;
+        mostrarVersiculo();
+      }
+    });
+
+    document.getElementById("next").addEventListener("click", () => {
+      if (verSelect.selectedIndex < verSelect.options.length - 1) {
+        verSelect.selectedIndex++;
+        mostrarVersiculo();
+      }
+    });
+
+    function atualizarCapitulos() {
+      capSelect.innerHTML = "";
+      verSelect.innerHTML = "";
+      const livro = biblia.find(l => l.name === livroSelect.value);
+      livro.chapters.forEach((_, index) => {
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = index + 1;
+        capSelect.appendChild(option);
+      });
+      atualizarVersiculos();
+    }
+
+    function atualizarVersiculos() {
+      verSelect.innerHTML = "";
+      const livro = biblia.find(l => l.name === livroSelect.value);
+      const capitulo = parseInt(capSelect.value);
+      livro.chapters[capitulo].forEach((_, index) => {
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = index + 1;
+        verSelect.appendChild(option);
+      });
+      mostrarVersiculo();
+    }
+
+    function mostrarVersiculo() {
+      const livro = biblia.find(l => l.name === livroSelect.value);
+      const capitulo = parseInt(capSelect.value);
+      const versiculo = parseInt(verSelect.value);
+      versiculoDisplay.textContent = livro.chapters[capitulo][versiculo];
+    }
+
+    function exibirImagem(){
+      let img = ["https://i.pinimg.com/736x/e1/40/3d/e1403d2df86182c0433c8520543cd9de.jpg",
+                  "https://i.pinimg.com/1200x/27/ca/7d/27ca7d9f0e5abdaddccb653bc0e5a92f.jpg",
+                  "https://i.pinimg.com/736x/43/a1/0a/43a10ab1d2922b83b4f3f271a06875a5.jpg",
+                  "https://i.pinimg.com/736x/23/13/5d/23135d64a4aea2c96e4d1cec8762eabf.jpg",
+                  "https://i.pinimg.com/736x/15/6e/2c/156e2c5973a71680afa1de4cadebe38c.jpg",
+                  "https://i.pinimg.com/736x/fa/e9/cb/fae9cb79032419fcb2beaad73748f094.jpg",
+                  "https://i.pinimg.com/1200x/a2/81/17/a2811740b9c28c48122accbbd2e3fa86.jpg",
+                  "https://i.pinimg.com/736x/ca/16/e6/ca16e6df923093276b89fc62ad5dd33d.jpg",
+                  "https://i.pinimg.com/736x/43/d2/b1/43d2b162cd5dd5a82a49e611ab2c7727.jpg",
+                  "https://i.pinimg.com/736x/ee/1d/1f/ee1d1f9564fd0ac83bc53cc3db9363f8.jpg",
+                  "https://i.pinimg.com/736x/64/df/6c/64df6c1975fa82830ab6f93a79250dd3.jpg",
+                  "https://i.pinimg.com/736x/5e/92/45/5e92455e681e7e3b622e62522f9320d9.jpg",
+                  "https://i.pinimg.com/736x/24/e3/7a/24e37ab02a8c9705eab17cdcfdb16cc3.jpg",
+                  "https://i.pinimg.com/736x/09/a4/f8/09a4f8f04efe3133555186a243a6ba66.jpg",
+                  "https://i.pinimg.com/736x/d8/ea/ed/d8eaed431f23bbb7dd7b09a3f0b0bad4.jpg",
+                  "https://i.pinimg.com/736x/7f/5e/64/7f5e64176fb14d82dd2b4802d13c3337.jpg",
+                  "https://i.pinimg.com/736x/44/57/7e/44577e2d0ceb554103ddd0324faee6de.jpg",
+                  "https://i.pinimg.com/736x/4e/ab/44/4eab44bd67fe5fe1be18c184c8b5ef72.jpg",
+                  "https://i.pinimg.com/736x/69/b8/66/69b866a517e07ce8b3d186902797d7f1.jpg",
+                  "https://i.pinimg.com/736x/f4/8f/7b/f48f7bd1c8f49ae9e013cddab1f0cd9d.jpg",
+                  "https://i.pinimg.com/736x/56/42/03/564203a58da783acd2fe06636d8c99f8.jpg",
+                  "https://i.pinimg.com/1200x/af/c8/a7/afc8a7de33e6e761f4dec8d900d0fce0.jpg",
+                  "https://i.pinimg.com/736x/fa/cc/75/facc75028517e9b29ac449dd2f6529c0.jpg",
+                  "https://i.pinimg.com/736x/8b/f3/4e/8bf34e07ccec6d4f141c56a34bb4f423.jpg",
+                  "https://i.pinimg.com/736x/d8/0f/76/d80f76682669e9abb170afd861ed19a3.jpg",
+                  "https://i.pinimg.com/736x/19/35/95/1935956358801351cfb25fd60a150d46.jpg",
+                  "https://i.pinimg.com/1200x/47/a8/91/47a891c964c8ee2854e8af064f9fcb34.jpg",
+                  "https://i.pinimg.com/736x/89/a2/b8/89a2b8a280e74d4419f0f3899569a696.jpg",
+                  "https://i.pinimg.com/736x/c3/c5/d0/c3c5d0a6a97b37e7c246f3784dd41b4e.jpg",
+                  "https://i.pinimg.com/1200x/f4/54/ae/f454ae073be2aa1f97c682ec586253fe.jpg",
+                  "https://i.pinimg.com/1200x/7f/f4/39/7ff4396c6214c7a7aef433d527e61305.jpg",
+                  "https://i.pinimg.com/736x/9c/a1/b6/9ca1b6a0c2766340f9b502e66cee3803.jpg",
+                  "https://i.pinimg.com/736x/66/3f/84/663f84c561415230a8e112e822d95490.jpg",
+                  "https://i.pinimg.com/736x/d5/69/42/d569421393faea621128eaafdfc00633.jpg",
+                  "https://i.pinimg.com/1200x/7b/91/d2/7b91d2cfc9c423a40f3ad190753290f3.jpg",
+                  "https://i.pinimg.com/1200x/77/89/26/778926a73c57943bda27c09bf6a902e7.jpg",
+                  "https://i.pinimg.com/1200x/3c/3f/2b/3c3f2b7040d69a718198feff0093286a.jpg",
+                  "https://i.pinimg.com/736x/ce/7b/27/ce7b279f9dbc03db56ef2fa9c2439c75.jpg",
+                  "https://i.pinimg.com/736x/b1/c2/ad/b1c2ade5654de54d58fc515b26ab6bb8.jpg",
+                  "https://i.pinimg.com/1200x/f5/e8/b7/f5e8b75f3038ea16b3b04d97292f9a0d.jpg",
+                  "https://i.pinimg.com/736x/11/d3/97/11d3978c81adcf780fc3ec870ad064d8.jpg",
+                  "https://i.pinimg.com/736x/7d/6b/ac/7d6bacbed6fd07414426eeee0ce43117.jpg",
+                ]
+      
+                document.querySelector("#comercial > img").setAttribute("src", img[Math.floor(Math.random() * img.length)]);
+    }
+    window.onload = exibirImagem;
+
+    document.getElementById('btnMais').addEventListener('click', function () {
+    const el = document.querySelector("#versiculo");
+    // Pega o valor atual da fonte
+    let currentSize = window.getComputedStyle(el).fontSize;
+    // Remove o "px" e converte para número
+    let newSize = parseInt(currentSize) + 5;
+    // Aplica o novo tamanho
+    el.style.fontSize = newSize + 'px';
+  });
+
+  document.getElementById('btnMenos').addEventListener('click', function () {
+    const el = document.querySelector("#versiculo");
+    // Pega o valor atual da fonte
+    let currentSize = window.getComputedStyle(el).fontSize;
+    // Remove o "px" e converte para número
+    let newSize = parseInt(currentSize) - 5;
+    // Aplica o novo tamanho
+    el.style.fontSize = newSize + 'px';
+  });
+  </script>
+</body>
+</html>
