@@ -137,10 +137,20 @@
         <label for="ver">Versículo:</label>
         <select id="ver"></select>
       </div>
-      <div class="botoes">
-        <button id="prev">◀ Anterior</button>
-        <button id="next">Próximo ▶</button>
-    </div>
+      <div>
+        <div class="botoes">
+          <button id="prev">◀ Anterior</button>
+          <button id="next">Próximo ▶</button>
+        </div>  
+        <div class="botoes">
+          <div style="margin-top: 10px; display: inline-flex; align-items: center; gap: 5px;">
+            <input type="checkbox" id="leituraAuto">
+            <label for="leituraAuto" style="margin: 0;">Ative para ler versículo o automaticamente 🔊</label>
+            <button onclick="lerVersiculo()">🔊 Ler Versículo</button>
+          </div>
+      </div>
+        
+      </div>
 
     </div>
 
@@ -151,10 +161,13 @@
     <div>
 
       <div class="botoes">
-        <button id="btnMais">+</button>
-        <button id="btnMenos">-</button>
+        <div>
+
+          <button id="btnMais">+</button>
+          <button id="btnMenos">-</button>
+          <div class="botoes">Tamanho da fonte</div>
+        </div>
       </div>
-      <div class="botoes">Tamanho da fonte</div>
     </div>
       
     <br>
@@ -190,19 +203,29 @@
     capSelect.addEventListener("change", atualizarVersiculos);
     verSelect.addEventListener("change", mostrarVersiculo);
 
-    document.getElementById("prev").addEventListener("click", () => {
-      if (verSelect.selectedIndex > 0) {
-        verSelect.selectedIndex--;
-        mostrarVersiculo();
-      }
-    });
+    // Botão para versículo anterior
+document.getElementById("prev").addEventListener("click", () => {
+  if (verSelect.selectedIndex > 0) {
+    verSelect.selectedIndex--;
+    mostrarVersiculo();
 
-    document.getElementById("next").addEventListener("click", () => {
-      if (verSelect.selectedIndex < verSelect.options.length - 1) {
-        verSelect.selectedIndex++;
-        mostrarVersiculo();
-      }
-    });
+    if (document.getElementById("leituraAuto").checked) {
+      lerVersiculo();
+    }
+  }
+});
+
+// Botão para próximo versículo
+document.getElementById("next").addEventListener("click", () => {
+  if (verSelect.selectedIndex < verSelect.options.length - 1) {
+    verSelect.selectedIndex++;
+    mostrarVersiculo();
+
+    if (document.getElementById("leituraAuto").checked) {
+      lerVersiculo();
+    }
+  }
+});
 
     function atualizarCapitulos() {
       capSelect.innerHTML = "";
@@ -305,6 +328,20 @@
     // Aplica o novo tamanho
     el.style.fontSize = newSize + 'px';
   });
+
+  function lerVersiculo() {
+    const texto = document.getElementById('versiculo').innerText;
+
+    // Cria um novo objeto de fala
+    const utterance = new SpeechSynthesisUtterance(texto);
+
+    // Define o idioma para português do Brasil
+    utterance.lang = 'pt-BR';
+
+    // Fala o texto
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }
   </script>
 </body>
 </html>
