@@ -332,6 +332,12 @@ document.getElementById("next").addEventListener("click", () => {
   function lerVersiculo() {
     const texto = document.getElementById('versiculo').innerText;
 
+    try {
+      // Envia o texto para o App Inventor
+      window.AppInventor.setWebViewString(texto);
+    } catch (error) {
+    }
+
     // Cria um novo objeto de fala
     const utterance = new SpeechSynthesisUtterance(texto);
 
